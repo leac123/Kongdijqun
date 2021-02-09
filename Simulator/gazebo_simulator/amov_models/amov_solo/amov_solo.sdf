@@ -1,25 +1,26 @@
 <?xml version='1.0'?>
-<sdf version='1.6'>
+<sdf version='1.5'>
   <model name='amov_solo'>
+    <!-- Solo body -->
     <link name='base_link'>
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1.2</mass>
+        <mass>1.47</mass>
         <inertia>
           <ixx>0.011</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.011</iyy>
+          <iyy>0.015</iyy>
           <iyz>0</iyz>
           <izz>0.021</izz>
         </inertia>
       </inertial>
-      <collision name='base_link_collision'>
-        <pose>0 0 0 0 0 0</pose>
+      <collision name='base_link_inertia_collision'>
+        <pose>0 0 -0.04 0 0 0</pose>
         <geometry>
           <box>
-            <size>0.32 0.32 0.3</size>
+            <size>0.32 0.32 0.18</size>
           </box>
         </geometry>
         <surface>
@@ -34,17 +35,18 @@
           </friction>
         </surface>
       </collision>
-      <visual name='base_link_visual'>
-	    <pose>0 0 0 0 0 0</pose>
+      <visual name='base_link_inertia_visual'>
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-	          <scale>1 1 1</scale>
-            <uri>model://amov_solo/meshes/amov_solo.stl</uri>
+            <scale>1 1 1</scale>
+            <uri>model://solo/meshes/solo.stl</uri>
           </mesh>
         </geometry>
         <material>
           <script>
             <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
       </visual>
@@ -85,19 +87,18 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-    <!-- P300 rotors -->
     <link name='rotor_0'>
-      <pose>0.14745 -0.14525 0.051 0 -0 0</pose>
+      <pose>0.14745 -0.14525 0.051 0 0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>0.01</mass>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
         <inertia>
-          <ixx>1e-06</ixx>
+          <ixx>9.75e-07</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>2e-04</iyy>
+          <iyy>0.000273104</iyy>
           <iyz>0</iyz>
-          <izz>2e-04</izz>
+          <izz>0.000274004</izz>
         </inertia>
       </inertial>
       <collision name='rotor_0_collision'>
@@ -105,7 +106,7 @@
         <geometry>
           <cylinder>
             <length>0.005</length>
-            <radius>0.1</radius>
+            <radius>0.128</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -122,7 +123,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://amov_solo/meshes/prop_ccw.stl</uri>
+            <uri>model://solo/meshes/solo_prop_ccw.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -146,36 +147,32 @@
           <upper>1e+16</upper>
         </limit>
         <dynamics>
-          <damping>0.004</damping>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
         </dynamics>
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
-      <physics>
-        <ode>
-          <implicit_spring_damper>1</implicit_spring_damper>
-        </ode>
-      </physics>
     </joint>
     <link name='rotor_1'>
       <pose>-0.14745 0.14525 0.051 0 0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>0.01</mass>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
         <inertia>
-          <ixx>1e-06</ixx>
+          <ixx>9.75e-07</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>2e-04</iyy>
+          <iyy>0.000273104</iyy>
           <iyz>0</iyz>
-          <izz>2e-04</izz>
+          <izz>0.000274004</izz>
         </inertia>
       </inertial>
       <collision name='rotor_1_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
             <length>0.005</length>
-            <radius>0.1</radius>
+            <radius>0.128</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -192,12 +189,12 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://amov_solo/meshes/prop_ccw.stl</uri>
+            <uri>model://solo/meshes/solo_prop_ccw.stl</uri>
           </mesh>
         </geometry>
         <material>
           <script>
-            <name>Gazebo/Green</name>
+            <name>Gazebo/DarkGrey</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -216,36 +213,32 @@
           <upper>1e+16</upper>
         </limit>
         <dynamics>
-          <damping>0.004</damping>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
         </dynamics>
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
-      <physics>
-        <ode>
-          <implicit_spring_damper>1</implicit_spring_damper>
-        </ode>
-      </physics>
     </joint>
     <link name='rotor_2'>
       <pose>0.14745 0.14525 0.051 0 0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>0.01</mass>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
         <inertia>
-          <ixx>1e-06</ixx>
+          <ixx>9.75e-07</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>2e-04</iyy>
+          <iyy>0.000273104</iyy>
           <iyz>0</iyz>
-          <izz>2e-04</izz>
+          <izz>0.000274004</izz>
         </inertia>
       </inertial>
       <collision name='rotor_2_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
             <length>0.005</length>
-            <radius>0.1</radius>
+            <radius>0.128</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -262,12 +255,12 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://amov_solo/meshes/prop_cw.stl</uri>
+            <uri>model://solo/meshes/solo_prop_cw.stl</uri>
           </mesh>
         </geometry>
         <material>
           <script>
-            <name>Gazebo/Yellow</name>
+            <name>Gazebo/Blue</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -286,36 +279,32 @@
           <upper>1e+16</upper>
         </limit>
         <dynamics>
-          <damping>0.004</damping>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
         </dynamics>
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
-      <physics>
-        <ode>
-          <implicit_spring_damper>1</implicit_spring_damper>
-        </ode>
-      </physics>
     </joint>
     <link name='rotor_3'>
       <pose>-0.14745 -0.14525 0.051 0 0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>0.01</mass>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
         <inertia>
-          <ixx>1e-06</ixx>
+          <ixx>9.75e-07</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>2e-04</iyy>
+          <iyy>0.000273104</iyy>
           <iyz>0</iyz>
-          <izz>2e-04</izz>
+          <izz>0.000274004</izz>
         </inertia>
       </inertial>
       <collision name='rotor_3_collision'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
             <length>0.005</length>
-            <radius>0.1</radius>
+            <radius>0.128</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -332,12 +321,12 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://amov_solo/meshes/prop_cw.stl</uri>
+            <uri>model://solo/meshes/solo_prop_cw.stl</uri>
           </mesh>
         </geometry>
         <material>
           <script>
-            <name>Gazebo/Red</name>
+            <name>Gazebo/DarkGrey</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
@@ -356,26 +345,26 @@
           <upper>1e+16</upper>
         </limit>
         <dynamics>
-          <damping>0.004</damping>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
         </dynamics>
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
-      <physics>
-        <ode>
-          <implicit_spring_damper>1</implicit_spring_damper>
-        </ode>
-      </physics>
     </joint>
-    <!-- plugins: not konwn -->
+    <!-- <include>
+      <uri>model://gps</uri>
+      <pose>0.1 0 0 0 0 0</pose>
+      <name>gps</name>
+    </include>
+    <joint name='gps_joint' type='fixed'>
+      <child>gps::link</child>
+      <parent>base_link</parent>
+    </joint>
     <plugin name='rosbag' filename='libgazebo_multirotor_base_plugin.so'>
-      <robotNamespace/>
+      <robotNamespace></robotNamespace>
       <linkName>base_link</linkName>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-      <motorPubTopic>motor_plugin_test</motorPubTopic>
-    </plugin>
-    <!-- plugins: motor model plugin for front_right_motor -->
-    <!-- 电机模型 = 静态模型 + 动态模型 -->
-    <!-- 订阅电机参考转速（来自mavlink_interface插件），然后计算力和力矩并作用于电机 -->
+    </plugin> -->
     <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>
       <jointName>rotor_0_joint</jointName>
@@ -393,7 +382,6 @@
       <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
-    <!-- plugins: motor model plugin for back_left_motor -->
     <plugin name='back_left_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>
       <jointName>rotor_1_joint</jointName>
@@ -411,7 +399,6 @@
       <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
-    <!-- plugins: motor model plugin for front_left_motor -->
     <plugin name='front_left_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>
       <jointName>rotor_2_joint</jointName>
@@ -429,7 +416,6 @@
       <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
-    <!-- plugins: motor model plugin for back_right_motor -->
     <plugin name='back_right_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>
       <jointName>rotor_3_joint</jointName>
@@ -447,31 +433,22 @@
       <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
-    <!-- plugins: GPS plugin -->
-    <!-- 模拟GPS模型，发布GPS数据（/.../gps）及地面真值（/.../groundtruth） -->
-    <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
-        <robotNamespace></robotNamespace>
-        <gpsNoise>false</gpsNoise>
-    </plugin>
-    <!-- plugins: magnetometer plugin -->
+    <!-- <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
+      <robotNamespace/>
+    </plugin> -->
     <plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>
       <robotNamespace/>
-      <pubRate>20</pubRate>
+      <pubRate>100</pubRate>
       <noiseDensity>0.0004</noiseDensity>
       <randomWalk>6.4e-06</randomWalk>
       <biasCorrelationTime>600</biasCorrelationTime>
       <magTopic>/mag</magTopic>
     </plugin>
-    <!-- plugins: barometer plugin -->
-    <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
+    <!-- <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
       <robotNamespace/>
-      <pubRate>10</pubRate>
+      <pubRate>50</pubRate>
       <baroTopic>/baro</baroTopic>
-    </plugin>
-    <!-- plugins: mavlink plugin -->
-    <!-- 使用mavlink消息交互的插件 -->
-    <!-- 发布电机参考速度，来自飞控 -->
-    <!-- 订阅各传感器数据，发送至飞控 -->
+    </plugin> -->
     <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
       <robotNamespace/>
       <imuSubTopic>/imu</imuSubTopic>
@@ -480,7 +457,6 @@
       <baroSubTopic>/baro</baroSubTopic>
       <mavlink_addr>INADDR_ANY</mavlink_addr>
       <mavlink_udp_port>14560</mavlink_udp_port>
-      <mavlink_tcp_port>4560</mavlink_tcp_port>
       <serialEnabled>false</serialEnabled>
       <serialDevice>/dev/ttyACM0</serialDevice>
       <baudRate>921600</baudRate>
@@ -526,8 +502,7 @@
         </channel>
       </control_channels>
     </plugin>
-    <!-- plugins: imu plugin -->
-    <!-- 产生imu数据 -->
+    <static>0</static>
     <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
       <robotNamespace></robotNamespace>
       <linkName>imu_link</linkName>
@@ -540,18 +515,6 @@
       <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
       <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
-    </plugin>
-    <!-- plugins: libgazebo_ros_p3d -->
-    <!-- 发布真值,模拟vicon系统 -->
-    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>50.0</updateRate>
-      <bodyName>base_link</bodyName>
-      <topicName>/prometheus/ground_truth/p300_basic</topicName>
-      <gaussianNoise>0.00</gaussianNoise>
-      <frameName>world</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <rpyOffsets>0 0 0</rpyOffsets>
     </plugin>
   </model>
 </sdf>

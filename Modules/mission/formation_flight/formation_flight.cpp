@@ -42,6 +42,7 @@ ros::Publisher uav2_command_pub;
 ros::Publisher uav3_command_pub;
 ros::Publisher uav4_command_pub;
 ros::Publisher uav5_command_pub;
+ros::Publisher uav10_command_pub;
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>声 明 函 数<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void printf_param();
 void pub_formation_command();
@@ -78,6 +79,7 @@ int main(int argc, char **argv)
     uav3_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav3/prometheus/swarm_command", 10);
     uav4_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav4/prometheus/swarm_command", 10);
     uav5_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav5/prometheus/swarm_command", 10);
+    uav10_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav10/prometheus/swarm_command", 10);
 
     //固定的浮点显示
     cout.setf(ios::fixed);
@@ -109,6 +111,7 @@ int main(int argc, char **argv)
         uav3_command_pub.publish(swarm_command);
         uav4_command_pub.publish(swarm_command);
         uav5_command_pub.publish(swarm_command);
+        uav10_command_pub.publish(swarm_command);
     }
 
     start_flag = 0;
@@ -127,6 +130,7 @@ int main(int argc, char **argv)
         uav3_command_pub.publish(swarm_command);
         uav4_command_pub.publish(swarm_command);
         uav5_command_pub.publish(swarm_command);
+        uav10_command_pub.publish(swarm_command);
     }
 
     
@@ -168,6 +172,7 @@ int main(int argc, char **argv)
             uav3_command_pub.publish(swarm_command);
             uav4_command_pub.publish(swarm_command);
             uav5_command_pub.publish(swarm_command);
+            uav10_command_pub.publish(swarm_command);
         }else if (start_flag == 3)
         {
             swarm_command.Mode = prometheus_msgs::SwarmCommand::Land;
