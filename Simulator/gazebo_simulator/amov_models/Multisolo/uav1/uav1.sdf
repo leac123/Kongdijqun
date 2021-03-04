@@ -16,25 +16,6 @@
           <izz>0.021</izz>
         </inertia>
       </inertial>
-      <collision name='base_link_inertia_collision'>
-        <pose>0 0 -0.04 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.32 0.32 0.18</size>
-          </box>
-        </geometry>
-        <surface>
-          <contact>
-            <ode>
-              <min_depth>0.001</min_depth>
-              <max_vel>0</max_vel>
-            </ode>
-          </contact>
-          <friction>
-            <ode/>
-          </friction>
-        </surface>
-      </collision>
       <visual name='base_link_inertia_visual'>
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -101,23 +82,6 @@
           <izz>0.000274004</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_0_collision'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.005</length>
-            <radius>0.128</radius>
-          </cylinder>
-        </geometry>
-        <surface>
-          <contact>
-            <ode/>
-          </contact>
-          <friction>
-            <ode/>
-          </friction>
-        </surface>
-      </collision>
       <visual name='rotor_0_visual'>
         <pose>-0.14745 -0.14525 -0.051 0 0 0</pose>
         <geometry>
@@ -167,23 +131,6 @@
           <izz>0.000274004</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_1_collision'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.005</length>
-            <radius>0.128</radius>
-          </cylinder>
-        </geometry>
-        <surface>
-          <contact>
-            <ode/>
-          </contact>
-          <friction>
-            <ode/>
-          </friction>
-        </surface>
-      </collision>
       <visual name='rotor_1_visual'>
         <pose>-0.14745 -0.14525 -0.051 0 0 0</pose>
         <geometry>
@@ -233,23 +180,6 @@
           <izz>0.000274004</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_2_collision'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.005</length>
-            <radius>0.128</radius>
-          </cylinder>
-        </geometry>
-        <surface>
-          <contact>
-            <ode/>
-          </contact>
-          <friction>
-            <ode/>
-          </friction>
-        </surface>
-      </collision>
       <visual name='rotor_2_visual'>
         <pose>-0.14745 0.14525 -0.051 0 0 0</pose>
         <geometry>
@@ -299,23 +229,6 @@
           <izz>0.000274004</izz>
         </inertia>
       </inertial>
-      <collision name='rotor_3_collision'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.005</length>
-            <radius>0.128</radius>
-          </cylinder>
-        </geometry>
-        <surface>
-          <contact>
-            <ode/>
-          </contact>
-          <friction>
-            <ode/>
-          </friction>
-        </surface>
-      </collision>
       <visual name='rotor_3_visual'>
         <pose>-0.14745 0.14525 -0.051 0 0 0</pose>
         <geometry>
@@ -360,11 +273,6 @@
       <child>gps::link</child>
       <parent>base_link</parent>
     </joint>
-    <plugin name='rosbag' filename='libgazebo_multirotor_base_plugin.so'>
-      <robotNamespace></robotNamespace>
-      <linkName>base_link</linkName>
-      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-    </plugin>
     <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>
       <jointName>rotor_0_joint</jointName>
@@ -432,9 +340,6 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-    </plugin>
-    <plugin name='groundtruth_plugin' filename='libgazebo_groundtruth_plugin.so'>
-      <robotNamespace/>
     </plugin>
     <plugin name='magnetometer_plugin' filename='libgazebo_magnetometer_plugin.so'>
       <robotNamespace/>
@@ -518,18 +423,6 @@
       <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
     </plugin>
-    <!-- plugins: libgazebo_ros_p3d -->
-    <!-- 发布真值,模拟vicon系统 -->
-    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>50.0</updateRate>
-      <bodyName>base_link</bodyName>
-      <!-- 改为对应无人机前缀 -->
-      <topicName>/uav1/prometheus/ground_truth</topicName>
-      <gaussianNoise>0.00</gaussianNoise>
-      <frameName>world</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <rpyOffsets>0 0 0</rpyOffsets>
-    </plugin>
+
   </model>
 </sdf>
