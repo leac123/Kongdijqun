@@ -4,7 +4,7 @@
     <env name="PX4_ESTIMATOR" value="ekf2_gps" />
 
 	<!-- 启动Gazebo，可选择仿真所用的world -->
-    <arg name="gui" default="true"/>
+    <arg name="gui" default="false"/>
 	<arg name="world" default="$(find prometheus_gazebo)/worlds/formation_stage.world"/>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="gui" value="$(arg gui)"/>
@@ -837,7 +837,7 @@
 		</node>
 
 		<!-- 启动MAVROS -->
-		<node pkg="mavros" type="mavros_node" name="mavros" output="screen" launch-prefix="gnome-terminal --">
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
 			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
 			<param name="gcs_url" value="" />
 			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
