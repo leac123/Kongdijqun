@@ -463,7 +463,7 @@
       <baudRate>921600</baudRate>
       <qgc_addr>INADDR_ANY</qgc_addr>
       <!-- qgc_udp_port: 14550 不更改 -->
-      <qgc_udp_port>18570</qgc_udp_port>
+      <qgc_udp_port>18589</qgc_udp_port>
       <hil_mode>false</hil_mode>
       <hil_state_level>false</hil_state_level>
       <enable_lockstep>true</enable_lockstep>
