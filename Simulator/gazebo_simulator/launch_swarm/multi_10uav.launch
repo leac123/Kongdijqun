@@ -25,8 +25,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="0"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -52,8 +52,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="1"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -79,8 +79,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="2"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -107,8 +107,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="3"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -135,8 +135,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="4"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -163,8 +163,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="5"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -191,8 +191,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="6"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -219,8 +219,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="7"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -247,8 +247,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="8"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>
@@ -275,8 +275,8 @@
         <!-- MAVROS and vehicle configs -->
         <arg name="ID" value="9"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find prometheus_gazebo)/launch_swarm/single_vehicle_spawn_sdf.launch">
             <arg name="x" value="0"/>

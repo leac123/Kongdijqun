@@ -51,8 +51,8 @@
 		<arg name="z" default="0.164"/>
 		<arg name="Yaw" default="0"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 
 		<!-- 启动PX4 SITL，此处参数配置不可删除 -->
 		<arg name="interactive" default="true"/>
@@ -93,8 +93,8 @@
 		<arg name="z" default="0.164"/>
 		<arg name="Yaw" default="0"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 
 		<!-- 启动PX4 SITL，此处参数配置不可删除 -->
 		<arg name="interactive" default="true"/>
@@ -134,8 +134,8 @@
 		<arg name="z" default="0.164"/>
 		<arg name="Yaw" default="0"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 
 		<!-- 启动PX4 SITL，此处参数配置不可删除 -->
 		<arg name="interactive" default="true"/>
@@ -175,8 +175,8 @@
 		<arg name="z" default="0.164"/>
 		<arg name="Yaw" default="0"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 
 		<!-- 启动PX4 SITL，此处参数配置不可删除 -->
 		<arg name="interactive" default="true"/>
@@ -216,8 +216,8 @@
 		<arg name="z" default="0.164"/>
 		<arg name="Yaw" default="0"/>
 		<!-- Mavros参数 -->
-		<arg name="udp_offboard_port_remote" value="$(eval 14540 + arg('ID'))"/>
-		<arg name="udp_offboard_port_local" value="$(eval 14580 + arg('ID'))"/>
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 
 		<!-- 启动PX4 SITL，此处参数配置不可删除 -->
 		<arg name="interactive" default="true"/>

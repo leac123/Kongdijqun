@@ -1,0 +1,426 @@
+<launch>
+    <!-- 1号飞机 -->
+    <group ns="uav1">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="0"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 2号飞机 -->
+    <group ns="uav2">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="1"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 3号飞机 -->
+    <group ns="uav3">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="2"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 4号飞机 -->
+    <group ns="uav4">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="3"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 5号飞机 -->
+    <group ns="uav5">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="4"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 6号飞机 -->
+    <group ns="uav6">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="5"/>
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 7号飞机 -->
+    <group ns="uav7">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="6"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 8号飞机 -->
+    <group ns="uav8">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="7"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 9号飞机 -->
+    <group ns="uav9">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="8"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 10号飞机 -->
+    <group ns="uav10">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="9"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 11号飞机 -->
+    <group ns="uav11">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="10"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 12号飞机 -->
+    <group ns="uav12">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="11"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 13号飞机 -->
+    <group ns="uav13">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="12"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 14号飞机 -->
+    <group ns="uav14">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="13"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 15号飞机 -->
+    <group ns="uav15">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="14"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 16号飞机 -->
+    <group ns="uav16">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="15"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 17号飞机 -->
+    <group ns="uav17">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="16"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 18号飞机 -->
+    <group ns="uav18">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="17"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 19号飞机 -->
+    <group ns="uav19">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="18"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+    <!-- 20号飞机 -->
+    <group ns="uav20">
+        <!-- 参数配置-->
+		<!-- ID编号 -->
+        <arg name="ID" value="19"/>
+
+		<!-- Mavros参数 -->
+		<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+		<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
+
+		<!-- 启动MAVROS -->
+		<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+			<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
+			<param name="gcs_url" value="" />
+			<param name="target_system_id" value="$(eval 1 + arg('ID'))"/>
+			<param name="target_component_id" value="1" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_pluginlists.yaml" />
+			<rosparam command="load" file="$(find prometheus_gazebo)/config/mavros_config/px4_config.yaml" />
+		</node>
+    </group>
+
+</launch>
+
