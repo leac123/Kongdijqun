@@ -81,6 +81,10 @@ add_executable(number_detection number_detection/number_detection.cpp)
 add_dependencies(number_detection prometheus_mission_gencpp)
 target_link_libraries(number_detection ${catkin_LIBRARIES})
 
+add_executable(formation_flight_40uav formation_flight/formation_flight_40uav.cpp)
+add_dependencies(formation_flight_40uav prometheus_mission_gencpp)
+target_link_libraries(formation_flight_40uav ${catkin_LIBRARIES})
+
 add_executable(formation_flight formation_flight/formation_flight.cpp)
 add_dependencies(formation_flight prometheus_mission_gencpp)
 target_link_libraries(formation_flight ${catkin_LIBRARIES})

@@ -1,0 +1,369 @@
+/***************************************************************************************************************************
+* formation_flight_40uav.cpp
+*
+* Author: Qyp
+*
+* Update Time: 2021.3.10
+*                           
+*    40架飞机阵型控制程序,仅用于Gazebo仿真.               
+***************************************************************************************************************************/
+
+//ros头文件
+#include <ros/ros.h>
+#include <Eigen/Eigen>
+#include <iostream>
+#include <mission_utils.h>
+
+//topic 头文件
+#include <geometry_msgs/Point.h>
+#include <prometheus_msgs/SwarmCommand.h>
+#include <prometheus_msgs/DroneState.h>
+#include <prometheus_msgs/DetectionInfo.h>
+#include <prometheus_msgs/PositionReference.h>
+#include <nav_msgs/Odometry.h>
+#include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TwistStamped.h>
+#include <mavros_msgs/ActuatorControl.h>
+#include <sensor_msgs/Imu.h>
+#include <prometheus_msgs/DroneState.h>
+#include <prometheus_msgs/AttitudeReference.h>
+#include <prometheus_msgs/DroneState.h>
+#include <nav_msgs/Path.h>
+#include <std_msgs/Int8.h>
+#include <math.h>
+#include "message_utils.h"
+
+using namespace std;
+
+#define NODE_NAME "formation_flight_40uav"
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>全 局 变 量<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+int controller_num;
+
+prometheus_msgs::SwarmCommand swarm_command;  
+
+Eigen::Vector3f virtual_leader_pos;
+Eigen::Vector3f virtual_leader_vel;
+float virtual_leader_yaw;
+float formation_size;
+int formation_num = 1;
+
+// 无人机集群控制指令发布声明
+ros::Publisher uav1_command_pub,uav2_command_pub,uav3_command_pub,uav4_command_pub,uav5_command_pub;
+ros::Publisher uav6_command_pub,uav7_command_pub,uav8_command_pub,uav9_command_pub,uav10_command_pub;
+ros::Publisher uav11_command_pub,uav12_command_pub,uav13_command_pub,uav14_command_pub,uav15_command_pub;
+ros::Publisher uav16_command_pub,uav17_command_pub,uav18_command_pub,uav19_command_pub,uav20_command_pub;
+ros::Publisher uav21_command_pub,uav22_command_pub,uav23_command_pub,uav24_command_pub,uav25_command_pub;
+ros::Publisher uav26_command_pub,uav27_command_pub,uav28_command_pub,uav29_command_pub,uav30_command_pub;
+ros::Publisher uav31_command_pub,uav32_command_pub,uav33_command_pub,uav34_command_pub,uav35_command_pub;
+ros::Publisher uav36_command_pub,uav37_command_pub,uav38_command_pub,uav39_command_pub,uav40_command_pub;
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>声 明 函 数<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+void printf_param();
+void pub_formation_command();
+void publish_same_command(prometheus_msgs::SwarmCommand swarm_command);
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>回 调 函 数<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+void goal_cb(const geometry_msgs::PoseStamped::ConstPtr& msg)
+{
+    cout << "Get a new goal from rviz!"<<endl;
+    virtual_leader_pos[0] = msg->pose.position.x;
+    virtual_leader_pos[1] = msg->pose.position.y;
+}
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>主 函 数<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "formation_flight_uav40");
+    ros::NodeHandle nh("~");
+    
+    // 0代表位置追踪模式，１代表速度追踪模式，２代表加速度追踪模式 
+    nh.param<int>("controller_num", controller_num, 0);
+    nh.param<float>("virtual_leader_pos_x", virtual_leader_pos[0], 0.0);
+    nh.param<float>("virtual_leader_pos_y", virtual_leader_pos[1], 0.0);
+    nh.param<float>("virtual_leader_pos_z", virtual_leader_pos[2], 0.6);
+    nh.param<float>("virtual_leader_yaw", virtual_leader_yaw, 0.0);
+    nh.param<float>("formation_size", formation_size, 1.0);
+
+    //【订阅】目标点
+    ros::Subscriber goal_sub = nh.subscribe<geometry_msgs::PoseStamped>("/prometheus/formation/virtual_leader", 10, goal_cb);
+
+    // 【发布】用于地面站显示的提示消息
+    ros::Publisher message_pub = nh.advertise<prometheus_msgs::Message>("/prometheus/message/main", 10);
+
+    //【发布】集群控制指令
+    uav1_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav1/prometheus/swarm_command", 10);
+    uav2_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav2/prometheus/swarm_command", 10);
+    uav3_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav3/prometheus/swarm_command", 10);
+    uav4_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav4/prometheus/swarm_command", 10);
+    uav5_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav5/prometheus/swarm_command", 10);
+    uav6_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav6/prometheus/swarm_command", 10);
+    uav7_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav7/prometheus/swarm_command", 10);
+    uav8_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav8/prometheus/swarm_command", 10);
+    uav9_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav9/prometheus/swarm_command", 10);
+    uav10_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav10/prometheus/swarm_command", 10);
+    uav11_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav11/prometheus/swarm_command", 10);
+    uav12_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav12/prometheus/swarm_command", 10);
+    uav13_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav13/prometheus/swarm_command", 10);
+    uav14_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav14/prometheus/swarm_command", 10);
+    uav15_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav15/prometheus/swarm_command", 10);
+    uav16_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav16/prometheus/swarm_command", 10);
+    uav17_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav17/prometheus/swarm_command", 10);
+    uav18_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav18/prometheus/swarm_command", 10);
+    uav19_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav19/prometheus/swarm_command", 10);
+    uav20_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav20/prometheus/swarm_command", 10);
+    uav21_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav21/prometheus/swarm_command", 10);
+    uav22_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav22/prometheus/swarm_command", 10);
+    uav23_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav23/prometheus/swarm_command", 10);
+    uav24_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav24/prometheus/swarm_command", 10);
+    uav25_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav25/prometheus/swarm_command", 10);
+    uav26_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav26/prometheus/swarm_command", 10);
+    uav27_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav27/prometheus/swarm_command", 10);
+    uav28_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav28/prometheus/swarm_command", 10);
+    uav29_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav29/prometheus/swarm_command", 10);
+    uav30_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav30/prometheus/swarm_command", 10);
+    uav31_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav31/prometheus/swarm_command", 10);
+    uav32_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav32/prometheus/swarm_command", 10);
+    uav33_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav33/prometheus/swarm_command", 10);
+    uav34_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav34/prometheus/swarm_command", 10);
+    uav35_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav35/prometheus/swarm_command", 10);
+    uav36_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav36/prometheus/swarm_command", 10);
+    uav37_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav37/prometheus/swarm_command", 10);
+    uav38_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav38/prometheus/swarm_command", 10);
+    uav39_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav39/prometheus/swarm_command", 10);
+    uav40_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav40/prometheus/swarm_command", 10);
+
+    //固定的浮点显示
+    cout.setf(ios::fixed);
+    //setprecision(n) 设显示小数精度为n位
+    cout<<setprecision(2);
+    //左对齐
+    cout.setf(ios::left);
+    // 强制显示小数点
+    cout.setf(ios::showpoint);
+    // 强制显示符号
+    cout.setf(ios::showpos);
+
+    // Waiting for input
+    int start_flag = 0;
+
+
+    ros::Duration(3.0).sleep();
+
+    printf_param();
+
+    while(start_flag == 0)
+    {
+        cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>Formation Flight UAV40 Mission<<<<<<<<<<<<<<<<<<<<<<<<< "<< endl;
+        cout << "Please enter 1 to disarm all the UAVs."<<endl;
+        cin >> start_flag;
+
+        swarm_command.Mode = prometheus_msgs::SwarmCommand::Idle;
+        swarm_command.yaw_ref = 999;
+
+        publish_same_command(swarm_command);
+    }
+
+    start_flag = 0;
+
+    while(start_flag == 0)
+    {
+        cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>Formation Flight Mission<<<<<<<<<<<<<<<<<<<<<<<<< "<< endl;
+        cout << "Please enter 1 to takeoff all the UAVs."<<endl;
+        cin >> start_flag;
+
+        swarm_command.Mode = prometheus_msgs::SwarmCommand::Takeoff;
+        swarm_command.yaw_ref = 0.0;
+
+        publish_same_command(swarm_command);
+    }
+
+    
+    float trajectory_total_time;
+    while (ros::ok())
+    {
+        cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>Formation Flight Mission<<<<<<<<<<<<<<<<<<<<<<<<< 3 for Circle Trajectory Tracking,"<< endl;
+        cout << "Please choose the action: 0 for Formation Shape, 1 for Virtual Leader Pos, 2 for Hold, 3 for Land, 4 for Circle, 5 for Disarm..."<<endl;
+        cin >> start_flag;
+
+        if (start_flag == 0)
+        {
+            cout << "Please choose the formation: 1 for One Column, 2 for Triangle, 3 for One Row ..."<<endl;
+            cin >> formation_num;
+
+            pub_formation_command();
+            
+        }else if (start_flag == 1)
+        {
+            cout << "Please enter the virtual leader position:"<<endl;
+            cout << "virtual_leader_pos: --- x [m] "<<endl;
+            cin >> virtual_leader_pos[0];
+            cout << "virtual_leader_pos: --- y [m]"<<endl;
+            cin >> virtual_leader_pos[1];
+            cout << "virtual_leader_pos: --- z [m]"<<endl;
+            cin >> virtual_leader_pos[2];
+            cout << "virtual_leader_yaw [deg]:"<<endl;
+            cin >> virtual_leader_yaw;
+            virtual_leader_yaw = virtual_leader_yaw/180.0*M_PI;
+
+            pub_formation_command();
+            
+        }else if (start_flag == 2)
+        {
+            swarm_command.Mode = prometheus_msgs::SwarmCommand::Hold;
+
+            publish_same_command(swarm_command);
+        }else if (start_flag == 3)
+        {
+            swarm_command.Mode = prometheus_msgs::SwarmCommand::Land;
+
+            publish_same_command(swarm_command);
+        }else if (start_flag == 4)
+        {
+            cout << "Input the trajectory_total_time:"<<endl;
+            cin >> trajectory_total_time;
+
+            float time_trajectory = 0.0;
+
+            while(time_trajectory < trajectory_total_time)
+            {
+
+                const float omega = 0.15;
+                const float circle_radius = 1.5;
+
+                virtual_leader_pos[0] = circle_radius * cos(time_trajectory * omega);
+                virtual_leader_pos[1] = circle_radius * sin(time_trajectory * omega);
+                //virtual_leader_pos[2] = 1.0;
+                virtual_leader_vel[0] = - omega * circle_radius * sin(time_trajectory * omega);
+                virtual_leader_vel[1] = omega * circle_radius * cos(time_trajectory * omega);
+                virtual_leader_vel[2] = 0.0;
+
+                time_trajectory = time_trajectory + 0.01;
+
+                cout << "Trajectory tracking: "<< time_trajectory << " / " << trajectory_total_time  << " [ s ]" <<endl;
+
+                pub_formation_command();
+                ros::Duration(0.01).sleep();
+            }
+        }else if (start_flag == 5)
+        {
+            swarm_command.Mode = prometheus_msgs::SwarmCommand::Disarm;
+
+            publish_same_command(swarm_command);
+        }else
+        {
+            cout << "Wrong input."<<endl;
+        }
+        
+        cout << "virtual_leader_pos [X Y] : " << virtual_leader_pos[0] << " [ m ] "<< virtual_leader_pos[1] <<" [ m ] "<< virtual_leader_pos[2] <<" [ m ] "<< endl;
+        cout << "virtual_leader_yaw: " << virtual_leader_yaw/M_PI*180.0 <<" [ deg ] "<< endl;
+     
+        ros::Duration(2.0).sleep();
+    }
+
+    return 0;
+
+}
+
+void pub_formation_command()
+{
+    if(formation_num == 1)
+    {
+        cout << "Formation shape: [ One_column ]"<<endl;
+
+        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_column;
+    }else if(formation_num == 2)
+    {
+        cout << "Formation shape: [ Triangle ]"<<endl;
+
+        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Triangle;
+    }else if(formation_num == 3)
+    {
+        cout << "Formation shape: [ One_row ]"<<endl;
+
+        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_row;
+    }else
+    {
+        cout << "Wrong formation shape!"<<endl;
+    }
+
+    if (controller_num == 0)
+    {
+        swarm_command.Mode = prometheus_msgs::SwarmCommand::Position_Control;
+    }else if(controller_num == 1)
+    {
+        swarm_command.Mode = prometheus_msgs::SwarmCommand::Velocity_Control;
+    }else if(controller_num == 2)
+    {
+        swarm_command.Mode = prometheus_msgs::SwarmCommand::Accel_Control;
+    }
+
+    swarm_command.swarm_size = formation_size;
+    swarm_command.position_ref[0] = virtual_leader_pos[0] ; 
+    swarm_command.position_ref[1] = virtual_leader_pos[1] ;
+    swarm_command.position_ref[2] = virtual_leader_pos[2] ;  
+    swarm_command.velocity_ref[0] = virtual_leader_vel[0] ; 
+    swarm_command.velocity_ref[1] = virtual_leader_vel[1] ; 
+    swarm_command.velocity_ref[2] = virtual_leader_vel[2] ; 
+    swarm_command.yaw_ref = virtual_leader_yaw;
+
+    uav1_command_pub.publish(swarm_command);
+    uav2_command_pub.publish(swarm_command);
+    uav3_command_pub.publish(swarm_command);
+    uav4_command_pub.publish(swarm_command);
+    uav5_command_pub.publish(swarm_command);
+
+}
+
+void printf_param()
+{
+    cout <<">>>>>>>>>>>>>>>>>>>>>>>> Formation Flight Parameter <<<<<<<<<<<<<<<<<<<<<<" <<endl;
+
+    cout << "controller_num   : "<< controller_num <<endl;
+    
+    cout << "virtual_leader_pos_x   : "<< virtual_leader_pos[0]<<" [m] "<<endl;
+    cout << "virtual_leader_pos_y   : "<< virtual_leader_pos[1]<<" [m] "<<endl;
+    cout << "virtual_leader_pos_z   : "<< virtual_leader_pos[2]<<" [m] "<<endl;
+    cout << "virtual_leader_yaw : "<< virtual_leader_yaw << " [rad]  "<< endl;
+    cout << "formation_size : "<< formation_size << " [m] "<< endl;
+}
+
+void publish_same_command(prometheus_msgs::SwarmCommand swarm_command)
+{
+    uav1_command_pub.publish(swarm_command);
+    uav2_command_pub.publish(swarm_command);
+    uav3_command_pub.publish(swarm_command);
+    uav4_command_pub.publish(swarm_command);
+    uav5_command_pub.publish(swarm_command);
+    uav6_command_pub.publish(swarm_command);
+    uav7_command_pub.publish(swarm_command);
+    uav8_command_pub.publish(swarm_command);
+    uav9_command_pub.publish(swarm_command);
+    uav10_command_pub.publish(swarm_command);
+    uav11_command_pub.publish(swarm_command);
+    uav12_command_pub.publish(swarm_command);
+    uav13_command_pub.publish(swarm_command);
+    uav14_command_pub.publish(swarm_command);
+    uav15_command_pub.publish(swarm_command);
+    uav16_command_pub.publish(swarm_command);
+    uav17_command_pub.publish(swarm_command);
+    uav18_command_pub.publish(swarm_command);
+    uav19_command_pub.publish(swarm_command);
+    uav20_command_pub.publish(swarm_command);
+    uav21_command_pub.publish(swarm_command);
+    uav22_command_pub.publish(swarm_command);
+    uav23_command_pub.publish(swarm_command);
+    uav24_command_pub.publish(swarm_command);
+    uav25_command_pub.publish(swarm_command);
+    uav26_command_pub.publish(swarm_command);
+    uav27_command_pub.publish(swarm_command);
+    uav28_command_pub.publish(swarm_command);
+    uav29_command_pub.publish(swarm_command);
+    uav30_command_pub.publish(swarm_command);
+    uav31_command_pub.publish(swarm_command);
+    uav32_command_pub.publish(swarm_command);
+    uav33_command_pub.publish(swarm_command);
+    uav34_command_pub.publish(swarm_command);
+    uav35_command_pub.publish(swarm_command);
+    uav36_command_pub.publish(swarm_command);
+    uav37_command_pub.publish(swarm_command);
+    uav38_command_pub.publish(swarm_command);
+    uav39_command_pub.publish(swarm_command);
+    uav40_command_pub.publish(swarm_command);
+}
