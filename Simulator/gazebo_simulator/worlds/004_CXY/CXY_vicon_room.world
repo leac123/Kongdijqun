@@ -54,25 +54,27 @@
     </physics>
 
     <!-- 房间四周墙体 -->
+    <!-- 房间大小粗略估计为 15米*6米*6米，但高度只取到4米（为了方便显示） -->
+    <!-- 取VICON区域中心点为原点，大致的可探测区域为 [-4.5,4.5]米*[-2.5,2.5]米*[0,3.5]米 -->
     <model name='room_wall'>
       <static>true</static>
       <!-- 前墙 -->
       <link name="wall_front">
-          <pose frame=''>5 0 1 0 -0 1.57</pose>
+          <pose frame=''>7.5 0 2 0 -0 1.57</pose>
           <inertial>
             <mass>2.0</mass>
           </inertial>
           <collision name="collision">
             <geometry>
               <box>
-                <size>4 0.1 3</size>
+                <size>6 0.1 4</size>
               </box>
             </geometry>
           </collision>
           <visual name="visual">
             <geometry>
               <box>
-                <size>4 0.1 3</size>
+                <size>6 0.1 4</size>
               </box>
             </geometry>
             <material>
@@ -86,21 +88,21 @@
       </link>
       <!-- 后墙 -->
       <link name="wall_back">
-          <pose frame=''>-5 0 1 0 -0 1.57</pose>
+          <pose frame=''>-7.5 0 2 0 -0 1.57</pose>
           <inertial>
             <mass>2.0</mass>
           </inertial>
           <collision name="collision">
             <geometry>
               <box>
-                <size>4 0.1 3</size>
+                <size>6 0.1 4</size>
               </box>
             </geometry>
           </collision>
           <visual name="visual">
             <geometry>
               <box>
-                <size>4 0.1 3</size>
+                <size>6 0.1 4</size>
               </box>
             </geometry>
             <material>
@@ -114,21 +116,21 @@
       </link>
       <!-- 右墙 -->
       <link name="wall_right">
-          <pose frame=''>-0 -2 1 0 -0 0</pose>
+          <pose frame=''>-0 -3 2 0 -0 0</pose>
           <inertial>
             <mass>2.0</mass>
           </inertial>
           <collision name="collision">
             <geometry>
               <box>
-                <size>10 0.1 3</size>
+                <size>15 0.1 4</size>
               </box>
             </geometry>
           </collision>
           <visual name="visual">
             <geometry>
               <box>
-                <size>10 0.1 3</size>
+                <size>15 0.1 4</size>
               </box>
             </geometry>
             <material>
@@ -142,21 +144,21 @@
       </link>
       <!-- 左墙 -->
       <link name="wall_left">
-          <pose frame=''>-0 2 1 0 -0 0</pose>
+          <pose frame=''>-0 3 2 0 -0 0</pose>
           <inertial>
             <mass>2.0</mass>
           </inertial>
           <collision name="collision">
             <geometry>
               <box>
-                <size>10 0.1 3</size>
+                <size>15 0.1 4</size>
               </box>
             </geometry>
           </collision>
           <visual name="visual">
             <geometry>
               <box>
-                <size>10 0.1 3</size>
+                <size>15 0.1 4</size>
               </box>
             </geometry>
             <material>
@@ -183,7 +185,7 @@
           <cast_shadows>false</cast_shadows>
           <geometry>
             <box>
-              <size>4.0 10.0 0.01</size>
+              <size>5 9.0 0.01</size>
             </box>
           </geometry>
           <material>
@@ -194,9 +196,9 @@
           </material>
         </visual>
       </link>
-      <!-- 前墙徽章 -->
+      <!-- 后墙徽章 -->
       <link name="sysu_logo">
-        <pose>-5.1 1 1 0 1.57 0</pose>
+        <pose>-7.6 1.5 2.5 0 1.57 0</pose>
         <visual name="visual">
           <cast_shadows>false</cast_shadows>
           <geometry>
@@ -214,7 +216,7 @@
       </link>
       <!-- 前墙海报 -->
       <link name="jky_logo">
-        <pose>-5.1 -1 1 0 1.57 0</pose>
+        <pose>-7.6 -1.5 2.5 0 1.57 0</pose>
         <visual name="visual">
           <cast_shadows>false</cast_shadows>
           <geometry>
@@ -233,7 +235,7 @@
 
       <!-- 左墙海报 -->
       <link name="jky_word">
-        <pose>-0.0 -2.11 1 0 1.57 1.57</pose>
+        <pose>-0.0 -3.11 2.5 0 1.57 1.57</pose>
         <visual name="visual">
           <cast_shadows>false</cast_shadows>
           <geometry>
@@ -253,7 +255,7 @@
 
       <!--　右墙海报 -->
       <link name="sysu_word">
-        <pose>0 2.11 1 3.14 1.57 1.57</pose>
+        <pose>0 3.11 2.5 3.14 1.57 1.57</pose>
         <visual name="visual">
           <cast_shadows>false</cast_shadows>
           <geometry>
