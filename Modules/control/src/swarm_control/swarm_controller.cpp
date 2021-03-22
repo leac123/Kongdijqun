@@ -18,6 +18,7 @@
 using namespace std;
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>变量声明<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 int swarm_num;
+float gazebo_offset[2];
 string uav_name;
 int uav_id,neighbour_id1,neighbour_id2;
 string neighbour_name1,neighbour_name2;
@@ -119,6 +120,9 @@ int main(int argc, char **argv)
 
     //无人机编号 1号无人机则为1
     nh.param<int>("swarm_num", swarm_num, 1);
+    nh.param<float>("x", gazebo_offset[0], 0);
+    nh.param<float>("y", gazebo_offset[1], 0);
+    nh.param<float>("z", gazebo_offset[2], 0);
     nh.param<int>("uav_id", uav_id, 0);
     nh.param<string>("uav_name", uav_name, "/uav0");
     nh.param<float>("k_p", k_p, 0.95);
@@ -148,7 +152,6 @@ int main(int argc, char **argv)
     //【订阅】集群控制指令
     ros::Subscriber command_sub = nh.subscribe<prometheus_msgs::SwarmCommand>(uav_name + "/prometheus/swarm_command", 10, swarm_command_cb);
 
-
     //【订阅】本机状态信息
     ros::Subscriber drone_state_sub = nh.subscribe<prometheus_msgs::DroneState>(uav_name + "/prometheus/drone_state", 10, drone_state_cb);
 
@@ -172,7 +175,6 @@ int main(int argc, char **argv)
     {
         printf_param();
     }
-    
     
     // 初始化命令-
     // 默认设置：Idle模式 电机怠速旋转 等待来自上层的控制指令
@@ -216,6 +218,7 @@ int main(int argc, char **argv)
 
         switch (Command_Now.Mode)
         {
+        cout << "mode：" << Command_Now.Mode << endl;
         // 【Idle】 怠速旋转，此时可以切入offboard模式，但不会起飞。
         case prometheus_msgs::SwarmCommand::Idle:
             
@@ -260,7 +263,9 @@ int main(int argc, char **argv)
                 state_sp = Eigen::Vector3d(Takeoff_position[0],Takeoff_position[1],Takeoff_position[2] + Takeoff_height);
             }
             _command_to_mavros.send_pos_setpoint(state_sp, Command_Now.yaw_ref);
-                
+            cout << "h:" << Takeoff_position[0]<<Takeoff_position[1]<<Takeoff_position[2] + Takeoff_height << _DroneState.attitude[2] <<endl;
+            cout << "drone:" << Command_Now.position_ref[0]<<Command_Now.position_ref[1]<<Command_Now.position_ref[2] << Command_Now.yaw_ref <<endl;
+            
             break;
 
         // 【Hold】 悬停。当前位置悬停
@@ -333,12 +338,13 @@ int main(int argc, char **argv)
         case prometheus_msgs::SwarmCommand::Position_Control:
 
             //　此控制方式即为　集中式控制，　直接由地面站指定期望位置点
-            state_sp[0] = Command_Now.position_ref[0] + formation_separation(uav_id-1,0);
-            state_sp[1] = Command_Now.position_ref[1] + formation_separation(uav_id-1,1);
-            state_sp[2] = Command_Now.position_ref[2] + formation_separation(uav_id-1,2);
-            yaw_sp = Command_Now.yaw_ref + formation_separation(uav_id-1,3);
+            state_sp[0] = Command_Now.position_ref[0] + formation_separation(uav_id-1,0) - gazebo_offset[0];
+            state_sp[1] = Command_Now.position_ref[1] + formation_separation(uav_id-1,1) - gazebo_offset[1];
+            state_sp[2] = Command_Now.position_ref[2] + formation_separation(uav_id-1,2) - gazebo_offset[2];
+            yaw_sp = Command_Now.yaw_ref;
             _command_to_mavros.send_pos_setpoint(state_sp, yaw_sp);
-
+            cout << "curPos" << Command_Now.position_ref[0] << " " << Command_Now.position_ref[1] << " " << Command_Now.position_ref[2] << endl;
+            cout << "2pos:" << state_sp[0] << " " << state_sp[1] << " " << state_sp[2] << endl;
             break;
 
         case prometheus_msgs::SwarmCommand::Velocity_Control:
