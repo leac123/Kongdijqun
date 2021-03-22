@@ -99,100 +99,47 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
         }
         if(swarm_num == 8)
         {
-            seperation(0,0) = 0.0;
-            seperation(0,1) = 0.5 * swarm_size;  
+            seperation(0,0) = 0.5 * swarm_size;
+            seperation(0,1) = 0.0 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 0.0;
-            seperation(1,1) = -0.5 * swarm_size;  
+            seperation(1,0) = -0.5 * swarm_size;
+            seperation(1,1) = 0.0 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
-            seperation(2,0) = 0.0;
-            seperation(2,1) = 1.5 * swarm_size;  
+            seperation(2,0) = 1.5 * swarm_size;
+            seperation(2,1) = 0.0 * swarm_size;  
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = 0.0;
-            seperation(3,1) = -1.5 * swarm_size;  
+            seperation(3,0) = -1.5 * swarm_size;
+            seperation(3,1) = 0.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = 0.0;
-            seperation(4,1) = 2.5 * swarm_size;  
+            seperation(4,0) = 2.5 * swarm_size;
+            seperation(4,1) = 0.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
-            seperation(5,0) = 0.0;
-            seperation(5,1) = -2.5 * swarm_size;  
+            seperation(5,0) = -2.5 * swarm_size;
+            seperation(5,1) = 0.0 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
-            seperation(6,0) = 0.0;
-            seperation(6,1) = 3.5 * swarm_size;  
+            seperation(6,0) = 3.5 * swarm_size;
+            seperation(6,1) = 0.0 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 
-            seperation(7,0) = 0.0;
-            seperation(7,1) = -3.5 * swarm_size;  
+            seperation(7,0) = -3.5 * swarm_size;
+            seperation(7,1) = 0.0 * swarm_size;  
             seperation(7,2) = 0.0;
             seperation(7,3) = 0.0;
         }
     }
-
-    // one_row shape
-    // 竖向一字型，虚拟领机位置为中心位置，其余飞机根据数量向左右增加
-    // if(swarm_shape == prometheus_msgs::SwarmCommand::One_row)
-    // {
-    //     if(swarm_num == 3)
-    //     {
-    //         //　数量为3时，１号机即虚拟领机位置
-    //         seperation(0,0) = swarm_size;
-    //         seperation(0,1) = 0.0;  
-    //         seperation(0,2) = 0.0;
-    //         seperation(0,3) = 0.0;
-
-    //         seperation(1,0) = 0.0;
-    //         seperation(1,1) = 0.0;  
-    //         seperation(1,2) = 0.0;
-    //         seperation(1,3) = 0.0;
-
-    //         seperation(2,0) = - 1 * swarm_size;
-    //         seperation(2,1) = 0.0;  
-    //         seperation(2,2) = 0.0;
-    //         seperation(2,3) = 0.0;
-    //     }
-
-    //     if(swarm_num == 5)
-    //     {
-    //         //　数量为５时，１号机即虚拟领机位置
-    //         seperation(0,0) = 2 * swarm_size;
-    //         seperation(0,1) = 0.0;  
-    //         seperation(0,2) = 0.0;
-    //         seperation(0,3) = 0.0;
-
-    //         seperation(1,0) = swarm_size;
-    //         seperation(1,1) = 0.0;  
-    //         seperation(1,2) = 0.0;
-    //         seperation(1,3) = 0.0;
-
-    //         seperation(2,0) = 0.0;
-    //         seperation(2,1) = 0.0; 
-    //         seperation(2,2) = 0.0;
-    //         seperation(2,3) = 0.0;
-
-    //         seperation(3,0) = -1 * swarm_size;  
-    //         seperation(3,1) = 0.0;
-    //         seperation(3,2) = 0.0;
-    //         seperation(3,3) = 0.0;
-
-    //         seperation(4,0) = - 2 * swarm_size; 
-    //         seperation(4,1) = 0.0;
-    //         seperation(4,2) = 0.0;
-    //         seperation(4,3) = 0.0;
-    //     }
-    // }
 
     // triangle shape
     // 三角型，虚拟领机位置为中心位置
@@ -246,43 +193,43 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
         }
         else if(swarm_num == 8)
         {
-            seperation(0,0) = 1.5 * swarm_size;
-            seperation(0,1) = 0.5 * swarm_size;  
+            seperation(0,0) = 0.5 * swarm_size;
+            seperation(0,1) = 1.5 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 1.5 * swarm_size;
-            seperation(1,1) = -0.5 * swarm_size;  
+            seperation(1,0) = -0.5 * swarm_size;
+            seperation(1,1) = 1.5 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
-            seperation(2,0) = 0.5 * swarm_size;
-            seperation(2,1) = 1.5 * swarm_size;  
+            seperation(2,0) = 1.5 * swarm_size;
+            seperation(2,1) = 0.5 * swarm_size;  
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = 0.5 * swarm_size;
-            seperation(3,1) = -1.5 * swarm_size;  
+            seperation(3,0) = -1.5 * swarm_size;
+            seperation(3,1) = 0.5 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = -0.5 * swarm_size;
-            seperation(4,1) = 2.5 * swarm_size;  
+            seperation(4,0) = 2.5 * swarm_size;
+            seperation(4,1) = -0.5 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
-            seperation(5,0) = -0.5 * swarm_size;
-            seperation(5,1) = -2.5 * swarm_size;  
+            seperation(5,0) = -2.5 * swarm_size;
+            seperation(5,1) = -0.5 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
-            seperation(6,0) = -1.5 * swarm_size;
-            seperation(6,1) = 3.5 * swarm_size;  
+            seperation(6,0) = 3.5 * swarm_size;
+            seperation(6,1) = -1.5 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 
-            seperation(7,0) = -1.5 * swarm_size;
-            seperation(7,1) = -3.5 * swarm_size;  
+            seperation(7,0) = -3.5 * swarm_size;
+            seperation(7,1) = -1.5 * swarm_size;  
             seperation(7,2) = 0.0;
             seperation(7,3) = 0.0;
         }
@@ -304,13 +251,13 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
         }
         else if(swarm_num == 8)
         {
-            seperation(0,0) = -1.0 * swarm_size;
-            seperation(0,1) = 0.0 * swarm_size;  
+            seperation(0,0) = 0.0 * swarm_size;
+            seperation(0,1) = -1.0 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 1.0 * swarm_size;
-            seperation(1,1) = 0.0 * swarm_size;  
+            seperation(1,0) = 0.0 * swarm_size;
+            seperation(1,1) = 1.0 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
@@ -319,23 +266,23 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = 1.0 * swarm_size;
-            seperation(3,1) = -1.0 * swarm_size;  
+            seperation(3,0) = -1.0 * swarm_size;
+            seperation(3,1) = 1.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = 0.0 * swarm_size;
-            seperation(4,1) = 1.0 * swarm_size;  
+            seperation(4,0) = 1.0 * swarm_size;
+            seperation(4,1) = 0.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
-            seperation(5,0) = 0.0 * swarm_size;
-            seperation(5,1) = -1.0 * swarm_size;  
+            seperation(5,0) = -1.0 * swarm_size;
+            seperation(5,1) = 0.0 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
-            seperation(6,0) = -1.0 * swarm_size;
-            seperation(6,1) = 1.0 * swarm_size;  
+            seperation(6,0) = 1.0 * swarm_size;
+            seperation(6,1) = -1.0 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 
@@ -362,13 +309,13 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
         }
         else if(swarm_num == 8)
         {
-            seperation(0,0) = -1.414 * swarm_size;
-            seperation(0,1) = 0.0 * swarm_size;  
+            seperation(0,0) = 0.0 * swarm_size;
+            seperation(0,1) = -1.414 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 1.414 * swarm_size;
-            seperation(1,1) = 0.0 * swarm_size;  
+            seperation(1,0) = 0.0 * swarm_size;
+            seperation(1,1) = 1.414 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
@@ -377,23 +324,23 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = 1.0 * swarm_size;
-            seperation(3,1) = -1.0 * swarm_size;  
+            seperation(3,0) = -1.0 * swarm_size;
+            seperation(3,1) = 1.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = 0.0 * swarm_size;
-            seperation(4,1) = 1.414 * swarm_size;  
+            seperation(4,0) = 1.414 * swarm_size;
+            seperation(4,1) = 0.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
-            seperation(5,0) = 0.0 * swarm_size;
-            seperation(5,1) = -1.414 * swarm_size;  
+            seperation(5,0) = -1.414 * swarm_size;
+            seperation(5,1) = 0.0 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
-            seperation(6,0) = -1.0 * swarm_size;
-            seperation(6,1) = 1.0 * swarm_size;  
+            seperation(6,0) = 1.0 * swarm_size;
+            seperation(6,1) = -1.0 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 

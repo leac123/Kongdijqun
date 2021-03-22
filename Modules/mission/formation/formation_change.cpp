@@ -130,7 +130,6 @@ void formation::change()
             //输入错误
             ROS_WARN("inpunt error, please input again");
         }
-        
     }
 }
 

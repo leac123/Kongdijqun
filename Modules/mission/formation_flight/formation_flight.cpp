@@ -42,7 +42,10 @@ ros::Publisher uav2_command_pub;
 ros::Publisher uav3_command_pub;
 ros::Publisher uav4_command_pub;
 ros::Publisher uav5_command_pub;
-ros::Publisher uav10_command_pub;
+ros::Publisher uav6_command_pub;
+ros::Publisher uav7_command_pub;
+ros::Publisher uav8_command_pub;
+// ros::Publisher uav10_command_pub;
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>声 明 函 数<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void printf_param();
 void pub_formation_command();
@@ -63,7 +66,7 @@ int main(int argc, char **argv)
     nh.param<int>("controller_num", controller_num, 0);
     nh.param<float>("virtual_leader_pos_x", virtual_leader_pos[0], 0.0);
     nh.param<float>("virtual_leader_pos_y", virtual_leader_pos[1], 0.0);
-    nh.param<float>("virtual_leader_pos_z", virtual_leader_pos[2], 0.6);
+    nh.param<float>("virtual_leader_pos_z", virtual_leader_pos[2], 1.0);
     nh.param<float>("virtual_leader_yaw", virtual_leader_yaw, 0.0);
     nh.param<float>("formation_size", formation_size, 1.0);
 
@@ -79,7 +82,10 @@ int main(int argc, char **argv)
     uav3_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav3/prometheus/swarm_command", 10);
     uav4_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav4/prometheus/swarm_command", 10);
     uav5_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav5/prometheus/swarm_command", 10);
-    uav10_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav10/prometheus/swarm_command", 10);
+    uav6_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav6/prometheus/swarm_command", 10);
+    uav7_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav7/prometheus/swarm_command", 10);
+    uav8_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav8/prometheus/swarm_command", 10);
+    // uav10_command_pub = nh.advertise<prometheus_msgs::SwarmCommand>("/uav10/prometheus/swarm_command", 10);
 
     //固定的浮点显示
     cout.setf(ios::fixed);
@@ -111,17 +117,18 @@ int main(int argc, char **argv)
         uav3_command_pub.publish(swarm_command);
         uav4_command_pub.publish(swarm_command);
         uav5_command_pub.publish(swarm_command);
-        uav10_command_pub.publish(swarm_command);
+        uav6_command_pub.publish(swarm_command);
+        uav7_command_pub.publish(swarm_command);
+        uav8_command_pub.publish(swarm_command);
+        // uav10_command_pub.publish(swarm_command);
     }
 
     start_flag = 0;
-
     while(start_flag == 0)
     {
         cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>Formation Flight Mission<<<<<<<<<<<<<<<<<<<<<<<<< "<< endl;
         cout << "Please enter 1 to takeoff all the UAVs."<<endl;
         cin >> start_flag;
-
         swarm_command.Mode = prometheus_msgs::SwarmCommand::Takeoff;
         swarm_command.yaw_ref = 0.0;
 
@@ -130,9 +137,11 @@ int main(int argc, char **argv)
         uav3_command_pub.publish(swarm_command);
         uav4_command_pub.publish(swarm_command);
         uav5_command_pub.publish(swarm_command);
-        uav10_command_pub.publish(swarm_command);
+        uav6_command_pub.publish(swarm_command);
+        uav7_command_pub.publish(swarm_command);
+        uav8_command_pub.publish(swarm_command);
+        // uav10_command_pub.publish(swarm_command);
     }
-
     
     float trajectory_total_time;
     while (ros::ok())
@@ -140,15 +149,15 @@ int main(int argc, char **argv)
         cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>Formation Flight Mission<<<<<<<<<<<<<<<<<<<<<<<<< 3 for Circle Trajectory Tracking,"<< endl;
         cout << "Please choose the action: 0 for Formation Shape, 1 for Virtual Leader Pos, 2 for Hold, 3 for Land, 4 for Circle, 5 for Disarm..."<<endl;
         cin >> start_flag;
-
         if (start_flag == 0)
         {
-            cout << "Please choose the formation: 1 for One Column, 2 for Triangle, 3 for One Row ..."<<endl;
+            cout << "Please choose the formation: 1 for One Column, 2 for Triangle, 3 for Square, 4 for Circular ..."<<endl;
             cin >> formation_num;
 
             pub_formation_command();
             
-        }else if (start_flag == 1)
+        }
+        else if (start_flag == 1)
         {
             cout << "Please enter the virtual leader position:"<<endl;
             cout << "virtual_leader_pos: --- x [m] "<<endl;
@@ -163,7 +172,8 @@ int main(int argc, char **argv)
 
             pub_formation_command();
             
-        }else if (start_flag == 2)
+        }
+        else if (start_flag == 2)
         {
             swarm_command.Mode = prometheus_msgs::SwarmCommand::Hold;
 
@@ -172,8 +182,12 @@ int main(int argc, char **argv)
             uav3_command_pub.publish(swarm_command);
             uav4_command_pub.publish(swarm_command);
             uav5_command_pub.publish(swarm_command);
-            uav10_command_pub.publish(swarm_command);
-        }else if (start_flag == 3)
+            uav6_command_pub.publish(swarm_command);
+            uav7_command_pub.publish(swarm_command);
+            uav8_command_pub.publish(swarm_command);
+            // uav10_command_pub.publish(swarm_command);
+        }
+        else if (start_flag == 3)
         {
             swarm_command.Mode = prometheus_msgs::SwarmCommand::Land;
 
@@ -182,9 +196,13 @@ int main(int argc, char **argv)
             uav3_command_pub.publish(swarm_command);
             uav4_command_pub.publish(swarm_command);
             uav5_command_pub.publish(swarm_command);
-        }else if (start_flag == 4)
+            uav6_command_pub.publish(swarm_command);
+            uav7_command_pub.publish(swarm_command);
+            uav8_command_pub.publish(swarm_command);
+        }
+        else if (start_flag == 4)
         {
-            cout << "Input the trajectory_total_time:"<<endl;
+            cout << "Input        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_column; the trajectory_total_time:"<<endl;
             cin >> trajectory_total_time;
 
             float time_trajectory = 0.0;
@@ -209,7 +227,8 @@ int main(int argc, char **argv)
                 pub_formation_command();
                 ros::Duration(0.01).sleep();
             }
-        }else if (start_flag == 5)
+        }
+        else if (start_flag == 5)
         {
             swarm_command.Mode = prometheus_msgs::SwarmCommand::Disarm;
 
@@ -218,7 +237,11 @@ int main(int argc, char **argv)
             uav3_command_pub.publish(swarm_command);
             uav4_command_pub.publish(swarm_command);
             uav5_command_pub.publish(swarm_command);
-        }else
+            uav6_command_pub.publish(swarm_command);
+            uav7_command_pub.publish(swarm_command);
+            uav8_command_pub.publish(swarm_command);
+        }
+        else
         {
             cout << "Wrong input."<<endl;
         }
@@ -228,9 +251,7 @@ int main(int argc, char **argv)
      
         ros::Duration(2.0).sleep();
     }
-
     return 0;
-
 }
 
 void pub_formation_command()
@@ -240,32 +261,44 @@ void pub_formation_command()
         cout << "Formation shape: [ One_column ]"<<endl;
 
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_column;
-    }else if(formation_num == 2)
+    }
+    else if(formation_num == 2)
     {
         cout << "Formation shape: [ Triangle ]"<<endl;
 
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Triangle;
-    }else if(formation_num == 3)
+    }
+    else if(formation_num == 3)
     {
-        cout << "Formation shape: [ One_row ]"<<endl;
+        cout << "Formation shape: [ Square ]"<<endl;
 
-        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_row;
-    }else
+        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Square;
+    }
+    else if(formation_num == 4)
+    {
+        cout << "Formation shape: [ Circular ]"<<endl;
+
+        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Circular;
+    }
+    else
     {
         cout << "Wrong formation shape!"<<endl;
     }
 
-    if (controller_num == 0)
+    if(controller_num == 0)
     {
         swarm_command.Mode = prometheus_msgs::SwarmCommand::Position_Control;
-    }else if(controller_num == 1)
+    }
+    else if(controller_num == 1)
     {
         swarm_command.Mode = prometheus_msgs::SwarmCommand::Velocity_Control;
-    }else if(controller_num == 2)
+    }
+    else if(controller_num == 2)
     {
         swarm_command.Mode = prometheus_msgs::SwarmCommand::Accel_Control;
     }
 
+    cout << "controller_num: " << controller_num << endl;
     swarm_command.swarm_size = formation_size;
     swarm_command.position_ref[0] = virtual_leader_pos[0] ; 
     swarm_command.position_ref[1] = virtual_leader_pos[1] ;
@@ -274,21 +307,22 @@ void pub_formation_command()
     swarm_command.velocity_ref[1] = virtual_leader_vel[1] ; 
     swarm_command.velocity_ref[2] = virtual_leader_vel[2] ; 
     swarm_command.yaw_ref = virtual_leader_yaw;
-
+    cout << "virtual_leader_pos: " << virtual_leader_pos[0] << "m "<<  virtual_leader_pos[1] << "m "<<  virtual_leader_pos[2] << "m "<< endl;
+    
     uav1_command_pub.publish(swarm_command);
     uav2_command_pub.publish(swarm_command);
     uav3_command_pub.publish(swarm_command);
     uav4_command_pub.publish(swarm_command);
     uav5_command_pub.publish(swarm_command);
-
+    uav6_command_pub.publish(swarm_command);
+    uav7_command_pub.publish(swarm_command);
+    uav8_command_pub.publish(swarm_command);
 }
 
 void printf_param()
 {
     cout <<">>>>>>>>>>>>>>>>>>>>>>>> Formation Flight Parameter <<<<<<<<<<<<<<<<<<<<<<" <<endl;
-
     cout << "controller_num   : "<< controller_num <<endl;
-    
     cout << "virtual_leader_pos_x   : "<< virtual_leader_pos[0]<<" [m] "<<endl;
     cout << "virtual_leader_pos_y   : "<< virtual_leader_pos[1]<<" [m] "<<endl;
     cout << "virtual_leader_pos_z   : "<< virtual_leader_pos[2]<<" [m] "<<endl;

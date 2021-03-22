@@ -74,11 +74,11 @@ class formation
         //切换为一字队形函数
         void set_horizontal();
 
-        //切换为菱形队形函数
-        void set_diamond();
+        //切换为方形队形函数
+        void set_square();
 
-        //切换为菱形队形过渡队形函数
-        void set_diamond_stage1();
+        //切换为圆形队形函数
+        void set_circular();
 
         //打印集群队形函数
         void printf_formation_type(std::string type_name);
@@ -122,6 +122,15 @@ class formation
         //5号机状态数据回调函数
         void Uav5StateCallBack(const mavros_msgs::StateConstPtr &state_msgs);
 
+        //6号机状态数据回调函数
+        void Uav6StateCallBack(const mavros_msgs::StateConstPtr &state_msgs);
+
+        //7号机状态数据回调函数
+        void Uav7StateCallBack(const mavros_msgs::StateConstPtr &state_msgs);
+
+        //8号机状态数据回调函数
+        void Uav8StateCallBack(const mavros_msgs::StateConstPtr &state_msgs);
+
         //1号机动捕位置数据回调函数
         void Uav1MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
 
@@ -137,6 +146,15 @@ class formation
         //5号机动捕位置数据回调函数
         void Uav5MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
 
+        //6号机动捕位置数据回调函数
+        void Uav6MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
+
+        //7号机动捕位置数据回调函数
+        void Uav7MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
+
+        //8号机动捕位置数据回调函数
+        void Uav8MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
+
         //1号机位置数据回调函数
         void Uav1PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
 
@@ -151,6 +169,15 @@ class formation
 
         //5号机位置数据回调函数
         void Uav5PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
+
+        //6号机位置数据回调函数
+        void Uav6PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
+
+        //7号机位置数据回调函数
+        void Uav7PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
+
+        //8号机位置数据回调函数
+        void Uav8PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs);
 
     private:
 
@@ -180,6 +207,15 @@ class formation
         //5号机状态数据订阅者
         ros::Subscriber uav5_state_sub;
 
+        //6号机状态数据订阅者
+        ros::Subscriber uav6_state_sub;
+
+        //7号机状态数据订阅者
+        ros::Subscriber uav7_state_sub;
+
+        //8号机状态数据订阅者
+        ros::Subscriber uav8_state_sub;
+
         //1号机动捕位置数据订阅者
         ros::Subscriber uav1_mocap_pose_sub;
 
@@ -194,6 +230,15 @@ class formation
 
         //5号机动捕位置数据订阅者
         ros::Subscriber uav5_mocap_pose_sub;
+
+        //6号机动捕位置数据订阅者
+        ros::Subscriber uav6_mocap_pose_sub;
+
+        //7号机动捕位置数据订阅者
+        ros::Subscriber uav7_mocap_pose_sub;
+
+        //8号机动捕位置数据订阅者
+        ros::Subscriber uav8_mocap_pose_sub;
 
         //1号机位置数据订阅者
         ros::Subscriber uav1_pose_sub;
@@ -210,6 +255,15 @@ class formation
         //5号机位置数据订阅者
         ros::Subscriber uav5_pose_sub;
 
+        //6号机位置数据订阅者
+        ros::Subscriber uav6_pose_sub;
+
+        //7号机位置数据订阅者
+        ros::Subscriber uav7_pose_sub;
+
+        //8号机位置数据订阅者
+        ros::Subscriber uav8_pose_sub;
+
 /*******************客户端*******************/
 
         ros::ServiceClient uav1_takeoff_client;
@@ -221,6 +275,12 @@ class formation
         ros::ServiceClient uav4_takeoff_client;
 
         ros::ServiceClient uav5_takeoff_client;
+
+        ros::ServiceClient uav6_takeoff_client;
+
+        ros::ServiceClient uav7_takeoff_client;
+
+        ros::ServiceClient uav8_takeoff_client;
 
 /*******************发布者*******************/
 
@@ -245,20 +305,38 @@ class formation
         //5号机动捕位置数据发布者
         ros::Publisher uav5_mocap_pose_pub;
 
+        //6号机动捕位置数据发布者
+        ros::Publisher uav6_mocap_pose_pub;
+
+        //7号机动捕位置数据发布者
+        ros::Publisher uav7_mocap_pose_pub;
+
+        //8号机动捕位置数据发布者
+        ros::Publisher uav8_mocap_pose_pub;
+
         //1号机控制指令发布者
         ros::Publisher uav1_local_pub;
 
-        //1号机控制指令发布者
+        //2号机控制指令发布者
         ros::Publisher uav2_local_pub;
 
-        //1号机控制指令发布者
+        //3号机控制指令发布者
         ros::Publisher uav3_local_pub;
 
-        //1号机控制指令发布者
+        //4号机控制指令发布者
         ros::Publisher uav4_local_pub;
 
-        //1号机控制指令发布者
+        //5号机控制指令发布者
         ros::Publisher uav5_local_pub;
+
+        //6号机控制指令发布者
+        ros::Publisher uav6_local_pub;
+
+        //7号机控制指令发布者
+        ros::Publisher uav7_local_pub;
+
+        //8号机控制指令发布者
+        ros::Publisher uav8_local_pub;
 
 /*******************变量*******************/
 
@@ -277,6 +355,15 @@ class formation
         //5号机期望位置
         mavros_msgs::PositionTarget uav5_desired_pose;
 
+        //6号机期望位置
+        mavros_msgs::PositionTarget uav6_desired_pose;
+
+        //7号机期望位置
+        mavros_msgs::PositionTarget uav7_desired_pose;
+
+        //8号机期望位置
+        mavros_msgs::PositionTarget uav8_desired_pose;
+
         //1号机当前位置
         geometry_msgs::PoseStamped uav1_current_pose;
 
@@ -291,6 +378,15 @@ class formation
 
         //5号机当前位置
         geometry_msgs::PoseStamped uav5_current_pose;
+
+        //6号机当前位置
+        geometry_msgs::PoseStamped uav6_current_pose;
+
+        //7号机当前位置
+        geometry_msgs::PoseStamped uav7_current_pose;
+
+        //8号机当前位置
+        geometry_msgs::PoseStamped uav8_current_pose;
 
         //1号机集群队形位置差值
         Eigen::Vector3d uav1_offset_pose;
@@ -307,6 +403,15 @@ class formation
         //5号机集群队形位置差值
         Eigen::Vector3d uav5_offset_pose;
 
+        //6号机集群队形位置差值
+        Eigen::Vector3d uav6_offset_pose;
+
+        //7号机集群队形位置差值
+        Eigen::Vector3d uav7_offset_pose;
+
+        //8号机集群队形位置差值
+        Eigen::Vector3d uav8_offset_pose;
+
         //1号机仿真位置差值
         Eigen::Vector3d uav1_gazebo_offset_pose;
 
@@ -321,6 +426,15 @@ class formation
 
         //5号机仿真位置差值
         Eigen::Vector3d uav5_gazebo_offset_pose;
+
+        //6号机仿真位置差值
+        Eigen::Vector3d uav6_gazebo_offset_pose;
+
+        //7号机仿真位置差值
+        Eigen::Vector3d uav7_gazebo_offset_pose;
+
+        //8号机仿真位置差值
+        Eigen::Vector3d uav8_gazebo_offset_pose;
 
         //1号机当前状态
         mavros_msgs::State uav1_state;
@@ -337,6 +451,15 @@ class formation
         //5号机当前状态
         mavros_msgs::State uav5_state;
 
+        //6号机当前状态
+        mavros_msgs::State uav6_state;
+
+        //7号机当前状态
+        mavros_msgs::State uav7_state;
+
+        //8号机当前状态
+        mavros_msgs::State uav8_state;
+
         //1号机起飞客户端变量(apm)
         mavros_msgs::CommandTOL uav1_takeoff_cmd;
 
@@ -351,6 +474,15 @@ class formation
 
         //5号机起飞客户端变量(apm)
         mavros_msgs::CommandTOL uav5_takeoff_cmd;
+
+        //6号机起飞客户端变量(apm)
+        mavros_msgs::CommandTOL uav6_takeoff_cmd;
+
+        //7号机起飞客户端变量(apm)
+        mavros_msgs::CommandTOL uav7_takeoff_cmd;
+
+        //8号机起飞客户端变量(apm)
+        mavros_msgs::CommandTOL uav8_takeoff_cmd;
 
         //集群队形X轴间隔距离:一字队形以及三角队形飞机之间X轴间隔距离为1倍该变量,菱形队形为2倍
         double formation_distance_x;
