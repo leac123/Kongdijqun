@@ -312,9 +312,9 @@ void command_to_mavros::send_pos_setpoint(const Eigen::Vector3d& pos_sp, float y
     setpoint_raw_local_pub.publish(pos_setpoint);
 
     // 检查飞控是否收到控制量
-    // cout <<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>command_to_mavros<<<<<<<<<<<<<<<<<<<<<<<<<<<" <<endl;
-    // cout << "Pos_target [X Y Z] : " << pos_drone_fcu_target[0] << " [ m ] "<< pos_drone_fcu_target[1]<<" [ m ] "<<pos_drone_fcu_target[2]<<" [ m ] "<<endl;
-    // cout << "Yaw_target : " << euler_fcu_target[2] * 180/M_PI<<" [deg] "<<endl;
+    ROS_INFO(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>command_to_mavros<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    ROS_INFO("Pos_target [X Y Z] : %f [ m ] %f [ m ] %f [ m ]\n",pos_drone_fcu_target[0],pos_drone_fcu_target[1],pos_drone_fcu_target[2]);
+    ROS_INFO("Yaw_target : %f [ deg ] \n",euler_fcu_target[2] * 180/M_PI);
 }
 
 //发送速度期望值至飞控（输入：期望vxvyvz,期望yaw）
