@@ -25,7 +25,9 @@ uint8 swarm_shape
 
 uint8 One_column=0
 uint8 Triangle=1
-uint8 One_row=2
+uint8 SQUARE=2
+uint8 CIRCULAR=3
+
 
 float32 swarm_size
 
