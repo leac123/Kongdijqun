@@ -275,9 +275,9 @@ void pub_formation_command()
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Triangle;
     }else if(formation_num == 3)
     {
-        cout << "Formation shape: [ One_row ]"<<endl;
+        cout << "todo:  Formation shape: [ One_row ]"<<endl;
 
-        swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_row;
+        // swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_row;
     }else
     {
         cout << "Wrong formation shape!"<<endl;

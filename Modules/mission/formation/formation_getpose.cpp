@@ -19,12 +19,18 @@ void formation::init()
     uav3_mocap_pose_sub = n.subscribe("/mocap/uav3/pose", 10, &formation::Uav3MocapPoseCallBack, this);
     uav4_mocap_pose_sub = n.subscribe("/mocap/uav4/pose", 10, &formation::Uav4MocapPoseCallBack, this);
     uav5_mocap_pose_sub = n.subscribe("/mocap/uav5/pose", 10, &formation::Uav5MocapPoseCallBack, this);
+    uav6_mocap_pose_sub = n.subscribe("/mocap/uav6/pose", 10, &formation::Uav6MocapPoseCallBack, this);
+    uav7_mocap_pose_sub = n.subscribe("/mocap/uav7/pose", 10, &formation::Uav7MocapPoseCallBack, this);
+    uav8_mocap_pose_sub = n.subscribe("/mocap/uav8/pose", 10, &formation::Uav8MocapPoseCallBack, this);
     //动捕系统位置数据发布者
     uav1_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav1/mavros/vision_pose/pose", 10);
     uav2_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav2/mavros/vision_pose/pose", 10);
     uav3_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav3/mavros/vision_pose/pose", 10);
     uav4_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav4/mavros/vision_pose/pose", 10);
     uav5_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav5/mavros/vision_pose/pose", 10);
+    uav6_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav6/mavros/vision_pose/pose", 10);
+    uav7_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav7/mavros/vision_pose/pose", 10);
+    uav8_mocap_pose_pub = n.advertise<geometry_msgs::PoseStamped>("/uav8/mavros/vision_pose/pose", 10);
 }
 
 void formation::getpose()
@@ -41,11 +47,17 @@ void formation::getpose()
         uav3_current_pose.header.stamp = ros::Time::now();
         uav4_current_pose.header.stamp = ros::Time::now();
         uav5_current_pose.header.stamp = ros::Time::now();
+        uav6_current_pose.header.stamp = ros::Time::now();
+        uav7_current_pose.header.stamp = ros::Time::now();
+        uav8_current_pose.header.stamp = ros::Time::now();
         uav1_mocap_pose_pub.publish(uav1_current_pose);
         uav2_mocap_pose_pub.publish(uav2_current_pose);
         uav3_mocap_pose_pub.publish(uav3_current_pose);
         uav4_mocap_pose_pub.publish(uav4_current_pose);
         uav5_mocap_pose_pub.publish(uav5_current_pose);
+        uav6_mocap_pose_pub.publish(uav5_current_pose);
+        uav7_mocap_pose_pub.publish(uav5_current_pose);
+        uav8_mocap_pose_pub.publish(uav5_current_pose);
         usleep(10000);
     }
 }
@@ -80,6 +92,24 @@ void formation::Uav4MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &
 void formation::Uav5MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
 {
     uav5_current_pose.pose = pose_msgs->pose;
+}
+
+//6号机
+void formation::Uav6MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
+{
+    uav6_current_pose.pose = pose_msgs->pose;
+}
+
+//7号机
+void formation::Uav7MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
+{
+    uav7_current_pose.pose = pose_msgs->pose;
+}
+
+//8号机
+void formation::Uav8MocapPoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
+{
+    uav8_current_pose.pose = pose_msgs->pose;
 }
 
 int main(int argc, char** argv)

@@ -53,69 +53,73 @@ void formation::change()
     {
         //打印提示信息
         std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>--------<<<<<<<<<<<<<<<<<<<<<<<<<<< " << std::endl;
-        std::cout << "Input the formation type:  0 for horizontal formation, 1 for triangle formation, 2 for diamond formation" << std::endl;
+        std::cout << "Input the formation type:  0 for horizontal formation, 1 for triangle formation, 2 for square formation, 3 for circular formation" << std::endl;
         //获取用户输入的值
         std::cin >> type_now;
         //判断值是否正确,正确则进入正常流程,错误则打印警告信息
-        if((type_now >= 0) && (type_now <= 2))
+        if((type_now >= 0) && (type_now <= 3))
         {
             switch(type_now)
             {
                 //一字队形
                 case 0:
-                    //判断当前队形是否为菱形队形,是菱形则先进入过渡队形
-                    if(type_last == prometheus_msgs::Formation::DIAMOND)
-                    {
-                        formation_data.type = prometheus_msgs::Formation::DIAMOND_STAGE_1;
-                        formation_type_pub.publish(formation_data);
-                        is_wait(diamond_intervals);
-                    }
                     //切换为一字队形
-                    formation_data.type = prometheus_msgs::Formation::HORIZONTAL;
-                    formation_type_pub.publish(formation_data);
-                    printf_formation_type("Horizontal");
-                    break;
-                
+                    if(location_source == "mocap")
+                    {
+                        formation_data.type = prometheus_msgs::Formation::HORIZONTAL;
+                        formation_type_pub.publish(formation_data);
+                        printf_formation_type("Horizontal");
+                        break;
+                    }
+                    else if(location_source == "uwb" || location_source == "gps")
+                    {
+                        ROS_WARN("not support");
+                        break;
+                    }
                 //三角队形
                 case 1:
-                    //判断当前队形是否为菱形队形,是菱形则先进入过渡队形
-                    if(type_last == prometheus_msgs::Formation::DIAMOND)
-                    {
-                        formation_data.type = prometheus_msgs::Formation::DIAMOND_STAGE_1;
-                        formation_type_pub.publish(formation_data);
-                        is_wait(diamond_intervals);
-                    }
                     //切换为三角队形
-                    formation_data.type = prometheus_msgs::Formation::TRIANGEL;
-                    formation_type_pub.publish(formation_data);
-                    printf_formation_type("Triangle");
-                    break;
-
-                //菱形队形
+                    if(location_source == "mocap")
+                    {
+                        formation_data.type = prometheus_msgs::Formation::TRIANGEL;
+                        formation_type_pub.publish(formation_data);
+                        printf_formation_type("Triangle"); 
+                        break;
+                    }
+                    else if(location_source == "uwb" || location_source == "gps")
+                    {
+                        ROS_WARN("not support");
+                        break;
+                    }
+                //方形队形
                 case 2:
                     if(location_source == "mocap")
                     {
-                        //判断当前队形是否为菱形队形,是菱形队形则直接跳出当前队形
-                        if(type_last == type_now)
-                        {
-                            break;
-                        }
-                        //进入过渡队形
-                        formation_data.type = prometheus_msgs::Formation::DIAMOND_STAGE_1;
-                        formation_type_pub.publish(formation_data);
-                        is_wait(diamond_intervals);
                         //切换为菱形队形
-                        formation_data.type = prometheus_msgs::Formation::DIAMOND;
+                        formation_data.type = prometheus_msgs::Formation::SQUARE;
                         formation_type_pub.publish(formation_data);
-                        printf_formation_type("Diamond");
+                        printf_formation_type("Square");
                         break;
                     }
-                    if(location_source == "uwb" || location_source == "gps")
+                    else if(location_source == "uwb" || location_source == "gps")
                     {
-                        ROS_WARN("not support diamond formation");
+                        ROS_WARN("not support");
                         break;
                     }
-                    
+                //圆形队形
+                case 3:
+                    if(location_source == "mocap")
+                    {
+                        formation_data.type = prometheus_msgs::Formation::CIRCULAR;
+                        formation_type_pub.publish(formation_data);
+                        printf_formation_type("Circular");
+                        break;
+                    }
+                    else if(location_source == "uwb" || location_source == "gps")
+                    {
+                        ROS_WARN("not support");
+                        break;
+                    }
             }
             //把当前集群队形变量赋值给上一集群队形变量
             type_last = type_now;
@@ -126,7 +130,6 @@ void formation::change()
             //输入错误
             ROS_WARN("inpunt error, please input again");
         }
-        
     }
 }
 

@@ -41,18 +41,30 @@ void formation::set_formation_px4_offboard()
     command_to_mavros ctm4("uav4");
 
     command_to_mavros ctm5("uav5");
+
+    command_to_mavros ctm6("uav6");
+
+    command_to_mavros ctm7("uav7");
+
+    command_to_mavros ctm8("uav8");
     //设置1~5号机模式变量为offboard,解上锁变量为解锁
     ctm1.arm_cmd.request.value = true;
     ctm2.arm_cmd.request.value = true;
     ctm3.arm_cmd.request.value = true;
     ctm4.arm_cmd.request.value = true;
     ctm5.arm_cmd.request.value = true;
+    ctm6.arm_cmd.request.value = true;
+    ctm7.arm_cmd.request.value = true;
+    ctm8.arm_cmd.request.value = true;
 
     ctm1.mode_cmd.request.custom_mode = "OFFBOARD";
     ctm2.mode_cmd.request.custom_mode = "OFFBOARD";
     ctm3.mode_cmd.request.custom_mode = "OFFBOARD";
     ctm4.mode_cmd.request.custom_mode = "OFFBOARD";
     ctm5.mode_cmd.request.custom_mode = "OFFBOARD";
+    ctm6.mode_cmd.request.custom_mode = "OFFBOARD";
+    ctm7.mode_cmd.request.custom_mode = "OFFBOARD";
+    ctm8.mode_cmd.request.custom_mode = "OFFBOARD";
 
     //集群按照23145的顺序对五台无人机分别解锁并切入offboard模式
     //当有一台无人机解锁或者切入offboard模式失败,该函数返回false
@@ -105,6 +117,30 @@ void formation::set_formation_px4_offboard()
     {
         ROS_ERROR("uav5 armed and set offboard mode failed");
     }
+    if(ctm6.arming_client.call(ctm6.arm_cmd) && ctm6.set_mode_client.call(ctm6.mode_cmd))
+    {
+        ROS_INFO("uav6 armed and set offboard mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav6 armed and set offboard mode failed");
+    }
+    if(ctm7.arming_client.call(ctm7.arm_cmd) && ctm7.set_mode_client.call(ctm7.mode_cmd))
+    {
+        ROS_INFO("uav7 armed and set offboard mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav7 armed and set offboard mode failed");
+    }
+    if(ctm8.arming_client.call(ctm8.arm_cmd) && ctm8.set_mode_client.call(ctm8.mode_cmd))
+    {
+        ROS_INFO("uav8 armed and set offboard mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav8 armed and set offboard mode failed");
+    }
 }
 
 void formation::set_formation_apm_guided()
@@ -120,24 +156,39 @@ void formation::set_formation_apm_guided()
 
     command_to_mavros ctm5("uav5");
 
+    command_to_mavros ctm6("uav6");
+
+    command_to_mavros ctm7("uav7");
+
+    command_to_mavros ctm8("uav8");
+
     //设置1~5号机模式变量为offboard,解上锁变量为解锁以及设置起飞变量高度
     ctm1.arm_cmd.request.value = true;
     ctm2.arm_cmd.request.value = true;
     ctm3.arm_cmd.request.value = true;
     ctm4.arm_cmd.request.value = true;
     ctm5.arm_cmd.request.value = true;
+    ctm6.arm_cmd.request.value = true;
+    ctm7.arm_cmd.request.value = true;
+    ctm8.arm_cmd.request.value = true;
 
     ctm1.mode_cmd.request.custom_mode = "GUIDED";
     ctm2.mode_cmd.request.custom_mode = "GUIDED";
     ctm3.mode_cmd.request.custom_mode = "GUIDED";
     ctm4.mode_cmd.request.custom_mode = "GUIDED";
     ctm5.mode_cmd.request.custom_mode = "GUIDED";
+    ctm6.mode_cmd.request.custom_mode = "GUIDED";
+    ctm7.mode_cmd.request.custom_mode = "GUIDED";
+    ctm8.mode_cmd.request.custom_mode = "GUIDED";
 
     uav1_takeoff_cmd.request.altitude = takeoff_height;
     uav2_takeoff_cmd.request.altitude = takeoff_height;
     uav3_takeoff_cmd.request.altitude = takeoff_height;
     uav4_takeoff_cmd.request.altitude = takeoff_height;
     uav5_takeoff_cmd.request.altitude = takeoff_height;
+    uav6_takeoff_cmd.request.altitude = takeoff_height;
+    uav7_takeoff_cmd.request.altitude = takeoff_height;
+    uav8_takeoff_cmd.request.altitude = takeoff_height;
 
     if(ctm2.arming_client.call(ctm2.arm_cmd) && ctm2.set_mode_client.call(ctm2.mode_cmd))
     {
@@ -232,8 +283,64 @@ void formation::set_formation_apm_guided()
     else
     {
         ROS_ERROR("uav5 armed and set guided mode failed");
+    }   
+    
+    if(ctm6.arming_client.call(ctm6.arm_cmd) && ctm6.set_mode_client.call(ctm6.mode_cmd))
+    {
+        ROS_INFO("uav6 armed and set guided mode success");
+        sleep(1);
+        if(uav6_takeoff_client.call(uav6_takeoff_cmd))
+        {
+            ROS_INFO("uav6 takeoff success");
+            is_wait(offboard_intervals);
+        }
+        else
+        {
+            ROS_ERROR("uav6 takeoff failed");
+        }
+    }
+    else
+    {
+        ROS_ERROR("uav6 armed and set guided mode failed");
     }
 
+    if(ctm7.arming_client.call(ctm7.arm_cmd) && ctm7.set_mode_client.call(ctm7.mode_cmd))
+    {
+        ROS_INFO("uav7 armed and set guided mode success");
+        sleep(1);
+        if(uav7_takeoff_client.call(uav7_takeoff_cmd))
+        {
+            ROS_INFO("uav7 takeoff success");
+            is_wait(offboard_intervals);
+        }
+        else
+        {
+            ROS_ERROR("uav7 takeoff failed");
+        }
+    }
+    else
+    {
+        ROS_ERROR("uav7 armed and set guided mode failed");
+    }
+
+    if(ctm8.arming_client.call(ctm8.arm_cmd) && ctm8.set_mode_client.call(ctm8.mode_cmd))
+    {
+        ROS_INFO("uav8 armed and set guided mode success");
+        sleep(1);
+        if(uav8_takeoff_client.call(uav8_takeoff_cmd))
+        {
+            ROS_INFO("uav8 takeoff success");
+            is_wait(offboard_intervals);
+        }
+        else
+        {
+            ROS_ERROR("uav8 takeoff failed");
+        }
+    }
+    else
+    {
+        ROS_ERROR("uav8 armed and set guided mode failed");
+    }
 }
 
 void formation::set_formation_px4_land()
@@ -249,12 +356,21 @@ void formation::set_formation_px4_land()
 
     command_to_mavros ctm5("uav5");
 
+    command_to_mavros ctm6("uav6");
+
+    command_to_mavros ctm7("uav7");
+
+    command_to_mavros ctm8("uav8");
+
     //设置1~5号机模式变量为land
     ctm1.mode_cmd.request.custom_mode = "AUTO.LAND";
     ctm2.mode_cmd.request.custom_mode = "AUTO.LAND";
     ctm3.mode_cmd.request.custom_mode = "AUTO.LAND";
     ctm4.mode_cmd.request.custom_mode = "AUTO.LAND";
     ctm5.mode_cmd.request.custom_mode = "AUTO.LAND";
+    ctm6.mode_cmd.request.custom_mode = "AUTO.LAND";
+    ctm7.mode_cmd.request.custom_mode = "AUTO.LAND";
+    ctm8.mode_cmd.request.custom_mode = "AUTO.LAND";
 
     //切换为land模式,并对结果进行打印
     if(ctm2.set_mode_client.call(ctm2.mode_cmd))
@@ -304,6 +420,33 @@ void formation::set_formation_px4_land()
     else
     {
         ROS_ERROR("uav5 set land mode failed");
+    }
+
+    if(ctm6.set_mode_client.call(ctm6.mode_cmd))
+    {
+        ROS_INFO("uav6 set land mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav6 set land mode failed");
+    }
+
+    if(ctm7.set_mode_client.call(ctm7.mode_cmd))
+    {
+        ROS_INFO("uav7 set land mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav7 set land mode failed");
+    }
+
+    if(ctm8.set_mode_client.call(ctm8.mode_cmd))
+    {
+        ROS_INFO("uav8 set land mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav8 set land mode failed");
     }
 }
 
@@ -320,12 +463,21 @@ void formation::set_formation_apm_land()
 
     command_to_mavros ctm5("uav5");
 
+    command_to_mavros ctm6("uav6");
+
+    command_to_mavros ctm7("uav7");
+
+    command_to_mavros ctm8("uav8");
+
     //设置1~5号机模式变量为land
     ctm1.mode_cmd.request.custom_mode = "LAND";
     ctm2.mode_cmd.request.custom_mode = "LAND";
     ctm3.mode_cmd.request.custom_mode = "LAND";
     ctm4.mode_cmd.request.custom_mode = "LAND";
     ctm5.mode_cmd.request.custom_mode = "LAND";
+    ctm6.mode_cmd.request.custom_mode = "LAND";
+    ctm7.mode_cmd.request.custom_mode = "LAND";
+    ctm8.mode_cmd.request.custom_mode = "LAND";
 
     //切换为land模式,并对结果进行打印
     if(ctm2.set_mode_client.call(ctm2.mode_cmd))
@@ -376,6 +528,33 @@ void formation::set_formation_apm_land()
     {
         ROS_ERROR("uav5 set land mode failed");
     }
+
+    if(ctm6.set_mode_client.call(ctm6.mode_cmd))
+    {
+        ROS_INFO("uav6 set land mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav6 set land mode failed");
+    }
+
+    if(ctm7.set_mode_client.call(ctm7.mode_cmd))
+    {
+        ROS_INFO("uav7 set land mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav7 set land mode failed");
+    }
+
+    if(ctm8.set_mode_client.call(ctm8.mode_cmd))
+    {
+        ROS_INFO("uav8 set land mode success");
+    }
+    else
+    {
+        ROS_ERROR("uav8 set land mode failed");
+    }
 }
 
 void formation::set_formation_disarmed()
@@ -391,12 +570,21 @@ void formation::set_formation_disarmed()
 
     command_to_mavros ctm5("uav5");
 
+    command_to_mavros ctm6("uav6");
+
+    command_to_mavros ctm7("uav7");
+
+    command_to_mavros ctm8("uav8");
+
     //设置1~5号机解上锁变量为false
     ctm1.arm_cmd.request.value = false;
-    ctm1.arm_cmd.request.value = false;
-    ctm1.arm_cmd.request.value = false;
-    ctm1.arm_cmd.request.value = false;
-    ctm1.arm_cmd.request.value = false;
+    ctm2.arm_cmd.request.value = false;
+    ctm3.arm_cmd.request.value = false;
+    ctm4.arm_cmd.request.value = false;
+    ctm5.arm_cmd.request.value = false;
+    ctm6.arm_cmd.request.value = false;
+    ctm7.arm_cmd.request.value = false;
+    ctm8.arm_cmd.request.value = false;
 
     //按照23145的顺序调用上锁服务,并根据结果打印相关提示信息
     if(ctm2.arming_client.call(ctm2.arm_cmd))
@@ -442,6 +630,33 @@ void formation::set_formation_disarmed()
     else
     {
         ROS_ERROR("uav5 disarmed failed");
+    }
+
+    if(ctm6.arming_client.call(ctm6.arm_cmd))
+    {
+        ROS_INFO("uav6 disarmed success");
+    }
+    else
+    {
+        ROS_ERROR("uav6 disarmed failed");
+    }
+
+    if(ctm7.arming_client.call(ctm7.arm_cmd))
+    {
+        ROS_INFO("uav7 disarmed success");
+    }
+    else
+    {
+        ROS_ERROR("uav7 disarmed failed");
+    }
+
+    if(ctm8.arming_client.call(ctm8.arm_cmd))
+    {
+        ROS_INFO("uav8 disarmed success");
+    }
+    else
+    {
+        ROS_ERROR("uav8 disarmed failed");
     }
 }
 

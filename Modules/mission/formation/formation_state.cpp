@@ -18,12 +18,18 @@ void formation::init()
     uav3_state_sub = n.subscribe("/uav3/mavros/state", 10, &formation::Uav3StateCallBack, this);
     uav4_state_sub = n.subscribe("/uav4/mavros/state", 10, &formation::Uav4StateCallBack, this);
     uav5_state_sub = n.subscribe("/uav5/mavros/state", 10, &formation::Uav5StateCallBack, this);
+    uav6_state_sub = n.subscribe("/uav6/mavros/state", 10, &formation::Uav6StateCallBack, this);
+    uav7_state_sub = n.subscribe("/uav7/mavros/state", 10, &formation::Uav7StateCallBack, this);
+    uav8_state_sub = n.subscribe("/uav8/mavros/state", 10, &formation::Uav8StateCallBack, this);
 
     uav1_pose_sub = n.subscribe("/uav1/mavros/local_position/pose", 10, &formation::Uav1PoseCallBack, this);
     uav2_pose_sub = n.subscribe("/uav2/mavros/local_position/pose", 10, &formation::Uav2PoseCallBack, this);
     uav3_pose_sub = n.subscribe("/uav3/mavros/local_position/pose", 10, &formation::Uav3PoseCallBack, this);
     uav4_pose_sub = n.subscribe("/uav4/mavros/local_position/pose", 10, &formation::Uav4PoseCallBack, this);
     uav5_pose_sub = n.subscribe("/uav5/mavros/local_position/pose", 10, &formation::Uav5PoseCallBack, this);
+    uav6_pose_sub = n.subscribe("/uav6/mavros/local_position/pose", 10, &formation::Uav6PoseCallBack, this);
+    uav7_pose_sub = n.subscribe("/uav7/mavros/local_position/pose", 10, &formation::Uav7PoseCallBack, this);
+    uav8_pose_sub = n.subscribe("/uav8/mavros/local_position/pose", 10, &formation::Uav8PoseCallBack, this);
 
     //设置程序初始时间
     begin_time = ros::Time::now();
@@ -57,6 +63,24 @@ void formation::Uav4PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_
 void formation::Uav5PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
 {
     uav5_current_pose = *pose_msgs;
+}
+
+//获取6号机位置数据回调函数
+void formation::Uav6PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
+{
+    uav6_current_pose = *pose_msgs;
+}
+
+//获取7号机位置数据回调函数
+void formation::Uav7PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
+{
+    uav7_current_pose = *pose_msgs;
+}
+
+//获取8号机位置数据回调函数
+void formation::Uav8PoseCallBack(const geometry_msgs::PoseStampedConstPtr &pose_msgs)
+{
+    uav8_current_pose = *pose_msgs;
 }
 
 //打印无人机状态函数
@@ -203,6 +227,84 @@ void formation::printf_formation_state()
     std::cout << " [ " << uav5_state.mode << " ] "  << std::endl;
     //5号机当前位置
     std::cout << "Position_uav5 [X Y Z]: " << uav5_current_pose.pose.position.x << "[ m ]" << uav5_current_pose.pose.position.y << "[ m ]" << uav5_current_pose.pose.position.z << "[ m ]" << std::endl;
+
+    //6号机
+    std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAV6 State<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+    //是否与飞控连接
+    if(uav6_state.connected == true)
+    {
+        std::cout << "  [Connected]  ";
+    }
+    else
+    {
+        std::cout << "  [Unconnected]  ";
+    }
+    //是否上锁
+    if(uav6_state.armed == true)
+    {
+        std::cout << "  [ Armed ]  ";
+    }
+    else
+    {
+        std::cout << "  [ DisArmed ]  ";
+    }
+
+    //6号机当前模式
+    std::cout << " [ " << uav6_state.mode << " ] "  << std::endl;
+    //6号机当前位置
+    std::cout << "Position_uav6 [X Y Z]: " << uav6_current_pose.pose.position.x << "[ m ]" << uav6_current_pose.pose.position.y << "[ m ]" << uav6_current_pose.pose.position.z << "[ m ]" << std::endl;
+
+    //7号机
+    std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAV7 State<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+    //是否与飞控连接
+    if(uav7_state.connected == true)
+    {
+        std::cout << "  [Connected]  ";
+    }
+    else
+    {
+        std::cout << "  [Unconnected]  ";
+    }
+    //是否上锁
+    if(uav7_state.armed == true)
+    {
+        std::cout << "  [ Armed ]  ";
+    }
+    else
+    {
+        std::cout << "  [ DisArmed ]  ";
+    }
+
+    //7号机当前模式
+    std::cout << " [ " << uav7_state.mode << " ] "  << std::endl;
+    //7号机当前位置
+    std::cout << "Position_uav7 [X Y Z]: " << uav7_current_pose.pose.position.x << "[ m ]" << uav7_current_pose.pose.position.y << "[ m ]" << uav7_current_pose.pose.position.z << "[ m ]" << std::endl;
+
+    //8号机
+    std::cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAV8 State<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+    //是否与飞控连接
+    if(uav8_state.connected == true)
+    {
+        std::cout << "  [Connected]  ";
+    }
+    else
+    {
+        std::cout << "  [Unconnected]  ";
+    }
+    //是否上锁
+    if(uav8_state.armed == true)
+    {
+        std::cout << "  [ Armed ]  ";
+    }
+    else
+    {
+        std::cout << "  [ DisArmed ]  ";
+    }
+
+    //8号机当前模式
+    std::cout << " [ " << uav8_state.mode << " ] "  << std::endl;
+    //8号机当前位置
+    std::cout << "Position_uav8 [X Y Z]: " << uav8_current_pose.pose.position.x << "[ m ]" << uav8_current_pose.pose.position.y << "[ m ]" << uav8_current_pose.pose.position.z << "[ m ]" << std::endl;
 }
 
 //集群控制函数
@@ -254,6 +356,23 @@ void formation::Uav5StateCallBack(const mavros_msgs::StateConstPtr &state_msgs)
     uav5_state = *state_msgs;
 }
 
+//6号机
+void formation::Uav6StateCallBack(const mavros_msgs::StateConstPtr &state_msgs)
+{
+    uav6_state = *state_msgs;
+}
+
+//7号机
+void formation::Uav7StateCallBack(const mavros_msgs::StateConstPtr &state_msgs)
+{
+    uav7_state = *state_msgs;
+}
+
+//8号机
+void formation::Uav8StateCallBack(const mavros_msgs::StateConstPtr &state_msgs)
+{
+    uav8_state = *state_msgs;
+}
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "formation_state");

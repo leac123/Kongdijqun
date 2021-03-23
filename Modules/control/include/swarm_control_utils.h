@@ -45,7 +45,7 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
 {
     //矩阵大小为　swarm_num＊4 , 对应　x,y,z,yaw四个自由度的分离量
     Eigen::MatrixXf seperation(swarm_num,4); 
-
+ 
     // one_column shape
     // 横向一字型，虚拟领机位置为中心位置，其余飞机根据数量向左右增加
     if(swarm_shape == prometheus_msgs::SwarmCommand::One_column)
@@ -97,58 +97,47 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
         }
-    }
-
-    // one_row shape
-    // 竖向一字型，虚拟领机位置为中心位置，其余飞机根据数量向左右增加
-    if(swarm_shape == prometheus_msgs::SwarmCommand::One_row)
-    {
-        if(swarm_num == 3)
+        if(swarm_num == 8)
         {
-            //　数量为3时，１号机即虚拟领机位置
-            seperation(0,0) = swarm_size;
-            seperation(0,1) = 0.0;  
+            seperation(0,0) = 0.5 * swarm_size;
+            seperation(0,1) = 0.0 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 0.0;
-            seperation(1,1) = 0.0;  
+            seperation(1,0) = -0.5 * swarm_size;
+            seperation(1,1) = 0.0 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
-            seperation(2,0) = - 1 * swarm_size;
-            seperation(2,1) = 0.0;  
-            seperation(2,2) = 0.0;
-            seperation(2,3) = 0.0;
-        }
-
-        if(swarm_num == 5)
-        {
-            //　数量为５时，１号机即虚拟领机位置
-            seperation(0,0) = 2 * swarm_size;
-            seperation(0,1) = 0.0;  
-            seperation(0,2) = 0.0;
-            seperation(0,3) = 0.0;
-
-            seperation(1,0) = swarm_size;
-            seperation(1,1) = 0.0;  
-            seperation(1,2) = 0.0;
-            seperation(1,3) = 0.0;
-
-            seperation(2,0) = 0.0;
-            seperation(2,1) = 0.0; 
+            seperation(2,0) = 1.5 * swarm_size;
+            seperation(2,1) = 0.0 * swarm_size;  
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = -1 * swarm_size;  
-            seperation(3,1) = 0.0;
+            seperation(3,0) = -1.5 * swarm_size;
+            seperation(3,1) = 0.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = - 2 * swarm_size; 
-            seperation(4,1) = 0.0;
+            seperation(4,0) = 2.5 * swarm_size;
+            seperation(4,1) = 0.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
+
+            seperation(5,0) = -2.5 * swarm_size;
+            seperation(5,1) = 0.0 * swarm_size;  
+            seperation(5,2) = 0.0;
+            seperation(5,3) = 0.0;
+
+            seperation(6,0) = 3.5 * swarm_size;
+            seperation(6,1) = 0.0 * swarm_size;  
+            seperation(6,2) = 0.0;
+            seperation(6,3) = 0.0;
+
+            seperation(7,0) = -3.5 * swarm_size;
+            seperation(7,1) = 0.0 * swarm_size;  
+            seperation(7,2) = 0.0;
+            seperation(7,3) = 0.0;
         }
     }
 
@@ -174,8 +163,7 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
         }
-
-        if(swarm_num == 5)
+        else if(swarm_num == 5)
         {
             //　数量为５时，
             seperation(0,0) = swarm_size;
@@ -203,8 +191,165 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
         }
+        else if(swarm_num == 8)
+        {
+            seperation(0,0) = 0.5 * swarm_size;
+            seperation(0,1) = 1.5 * swarm_size;  
+            seperation(0,2) = 0.0;
+            seperation(0,3) = 0.0;
+
+            seperation(1,0) = -0.5 * swarm_size;
+            seperation(1,1) = 1.5 * swarm_size;  
+            seperation(1,2) = 0.0;
+            seperation(1,3) = 0.0;
+
+            seperation(2,0) = 1.5 * swarm_size;
+            seperation(2,1) = 0.5 * swarm_size;  
+            seperation(2,2) = 0.0;
+            seperation(2,3) = 0.0;
+
+            seperation(3,0) = -1.5 * swarm_size;
+            seperation(3,1) = 0.5 * swarm_size;  
+            seperation(3,2) = 0.0;
+            seperation(3,3) = 0.0;
+
+            seperation(4,0) = 2.5 * swarm_size;
+            seperation(4,1) = -0.5 * swarm_size;  
+            seperation(4,2) = 0.0;
+            seperation(4,3) = 0.0;
+
+            seperation(5,0) = -2.5 * swarm_size;
+            seperation(5,1) = -0.5 * swarm_size;  
+            seperation(5,2) = 0.0;
+            seperation(5,3) = 0.0;
+
+            seperation(6,0) = 3.5 * swarm_size;
+            seperation(6,1) = -1.5 * swarm_size;  
+            seperation(6,2) = 0.0;
+            seperation(6,3) = 0.0;
+
+            seperation(7,0) = -3.5 * swarm_size;
+            seperation(7,1) = -1.5 * swarm_size;  
+            seperation(7,2) = 0.0;
+            seperation(7,3) = 0.0;
+        }
     }
 
+    // Square shape
+    // 方型，虚拟领机位置为中心位置
+    if(swarm_shape == prometheus_msgs::SwarmCommand::Square)
+    {
+        if(swarm_num == 3)
+        {
+            //　数量为５时，
+            // todo
+        }
+        else if(swarm_num == 5)
+        {
+            //　数量为５时，
+            // todo
+        }
+        else if(swarm_num == 8)
+        {
+            seperation(0,0) = 0.0 * swarm_size;
+            seperation(0,1) = -1.0 * swarm_size;  
+            seperation(0,2) = 0.0;
+            seperation(0,3) = 0.0;
+
+            seperation(1,0) = 0.0 * swarm_size;
+            seperation(1,1) = 1.0 * swarm_size;  
+            seperation(1,2) = 0.0;
+            seperation(1,3) = 0.0;
+
+            seperation(2,0) = 1.0 * swarm_size;
+            seperation(2,1) = 1.0 * swarm_size;  
+            seperation(2,2) = 0.0;
+            seperation(2,3) = 0.0;
+
+            seperation(3,0) = -1.0 * swarm_size;
+            seperation(3,1) = 1.0 * swarm_size;  
+            seperation(3,2) = 0.0;
+            seperation(3,3) = 0.0;
+
+            seperation(4,0) = 1.0 * swarm_size;
+            seperation(4,1) = 0.0 * swarm_size;  
+            seperation(4,2) = 0.0;
+            seperation(4,3) = 0.0;
+
+            seperation(5,0) = -1.0 * swarm_size;
+            seperation(5,1) = 0.0 * swarm_size;  
+            seperation(5,2) = 0.0;
+            seperation(5,3) = 0.0;
+
+            seperation(6,0) = 1.0 * swarm_size;
+            seperation(6,1) = -1.0 * swarm_size;  
+            seperation(6,2) = 0.0;
+            seperation(6,3) = 0.0;
+
+            seperation(7,0) = -1.0 * swarm_size;
+            seperation(7,1) = -1.0 * swarm_size;  
+            seperation(7,2) = 0.0;
+            seperation(7,3) = 0.0;
+        }
+    }
+
+    // Circular shape
+    // 圆形，虚拟领机位置为中心位置
+    if(swarm_shape == prometheus_msgs::SwarmCommand::Circular)
+    {
+        if(swarm_num == 3)
+        {
+            //　数量为５时，
+            // todo
+        }
+        else if(swarm_num == 5)
+        {
+            //　数量为５时，
+            // todo
+        }
+        else if(swarm_num == 8)
+        {
+            seperation(0,0) = 0.0 * swarm_size;
+            seperation(0,1) = -1.414 * swarm_size;  
+            seperation(0,2) = 0.0;
+            seperation(0,3) = 0.0;
+
+            seperation(1,0) = 0.0 * swarm_size;
+            seperation(1,1) = 1.414 * swarm_size;  
+            seperation(1,2) = 0.0;
+            seperation(1,3) = 0.0;
+
+            seperation(2,0) = 1.0 * swarm_size;
+            seperation(2,1) = 1.0 * swarm_size;  
+            seperation(2,2) = 0.0;
+            seperation(2,3) = 0.0;
+
+            seperation(3,0) = -1.0 * swarm_size;
+            seperation(3,1) = 1.0 * swarm_size;  
+            seperation(3,2) = 0.0;
+            seperation(3,3) = 0.0;
+
+            seperation(4,0) = 1.414 * swarm_size;
+            seperation(4,1) = 0.0 * swarm_size;  
+            seperation(4,2) = 0.0;
+            seperation(4,3) = 0.0;
+
+            seperation(5,0) = -1.414 * swarm_size;
+            seperation(5,1) = 0.0 * swarm_size;  
+            seperation(5,2) = 0.0;
+            seperation(5,3) = 0.0;
+
+            seperation(6,0) = 1.0 * swarm_size;
+            seperation(6,1) = -1.0 * swarm_size;  
+            seperation(6,2) = 0.0;
+            seperation(6,3) = 0.0;
+
+            seperation(7,0) = -1.0 * swarm_size;
+            seperation(7,1) = -1.0 * swarm_size;  
+            seperation(7,2) = 0.0;
+            seperation(7,3) = 0.0;
+        }
+    }
     return seperation;
 }
 
@@ -224,9 +369,7 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     // 强制显示符号
     cout.setf(ios::showpos);
 
-
     cout << "uav_id: ["<< uav_id <<"] ";
-
    //是否和飞控建立起连接
     if (_Drone_state.connected == true)
     {
@@ -236,7 +379,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     {
         cout << "[ Unconnected ] ";
     }
-
     //是否上锁
     if (_Drone_state.armed == true)
     {
@@ -246,7 +388,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     {
         cout << "[ DisArmed ] ";
     }
-
     //是否在地面
     if (_Drone_state.landed == true)
     {
@@ -266,7 +407,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     switch(SwarmCommand.Mode)
     {
         case prometheus_msgs::SwarmCommand::Idle:
-            
             if(SwarmCommand.yaw_ref == 999)
             {
                 cout << "Command: [ Idle + Arming + Switching to OFFBOARD mode ] " <<endl;
@@ -274,7 +414,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
             {
                 cout << "Command: [ Idle ] " <<endl;
             }
-            
             break;
 
         case prometheus_msgs::SwarmCommand::Takeoff:
@@ -300,9 +439,12 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
             }else if(SwarmCommand.swarm_shape == prometheus_msgs::SwarmCommand::Triangle)
             {
                 cout << "Command: [ Position_Control ] [Triangle] size: " << SwarmCommand.swarm_size <<endl;
-            }else if(SwarmCommand.swarm_shape == prometheus_msgs::SwarmCommand::One_row)
+            }else if(SwarmCommand.swarm_shape == prometheus_msgs::SwarmCommand::Square)
             {
-                cout << "Command: [ Position_Control ] [One_row] size: " << SwarmCommand.swarm_size <<endl;
+                cout << "Command: [ Position_Control ] [Square] size: " << SwarmCommand.swarm_size <<endl;
+            }else if(SwarmCommand.swarm_shape == prometheus_msgs::SwarmCommand::Circular)
+            {
+                cout << "Command: [ Position_Control ] [Circular] size: " << SwarmCommand.swarm_size <<endl;
             }
             
             formation = get_formation_separation(SwarmCommand.swarm_shape, SwarmCommand.swarm_size, swarm_num);
@@ -314,7 +456,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
 
             cout << "Position [X Y Z] : " << x  << " [ m ] "<< y <<" [ m ] "<< z <<" [ m ] "<<endl;
             cout << "Yaw : "  << yaw * 180/M_PI << " [deg] " <<endl;
-
             break;
 
         case prometheus_msgs::SwarmCommand::Velocity_Control:
@@ -328,7 +469,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
 
             cout << "Position [X Y Z] : " << x  << " [ m ] "<< y <<" [ m ] "<< z <<" [ m ] "<<endl;
             cout << "Yaw : "  << yaw * 180/M_PI << " [deg] " <<endl;
-
             break;
 
         case prometheus_msgs::SwarmCommand::Accel_Control:
@@ -348,9 +488,7 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
         case prometheus_msgs::SwarmCommand::User_Mode1:
             cout << "Command: [ User_Mode1 ] " <<endl;
             break;
-
     }
-
 }
 
 Eigen::Vector3d accelToThrottle(const Eigen::Vector3d& accel_sp, float mass, float tilt_max)
@@ -383,9 +521,6 @@ Eigen::Vector3d accelToThrottle(const Eigen::Vector3d& accel_sp, float mass, flo
     }
 
     return throttle_sp;   
-}
-
-
-
+    }
 }
 #endif
