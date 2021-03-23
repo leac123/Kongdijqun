@@ -1,5 +1,6 @@
 #include "A_star.h"
 //very good
+//this is a*
 
 using namespace std;
 using namespace Eigen;
