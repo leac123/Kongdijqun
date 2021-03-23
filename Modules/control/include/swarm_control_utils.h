@@ -350,7 +350,6 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
             seperation(7,3) = 0.0;
         }
     }
-
     return seperation;
 }
 
@@ -370,9 +369,7 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     // 强制显示符号
     cout.setf(ios::showpos);
 
-
     cout << "uav_id: ["<< uav_id <<"] ";
-
    //是否和飞控建立起连接
     if (_Drone_state.connected == true)
     {
@@ -382,7 +379,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     {
         cout << "[ Unconnected ] ";
     }
-
     //是否上锁
     if (_Drone_state.armed == true)
     {
@@ -392,7 +388,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     {
         cout << "[ DisArmed ] ";
     }
-
     //是否在地面
     if (_Drone_state.landed == true)
     {
@@ -412,7 +407,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
     switch(SwarmCommand.Mode)
     {
         case prometheus_msgs::SwarmCommand::Idle:
-            
             if(SwarmCommand.yaw_ref == 999)
             {
                 cout << "Command: [ Idle + Arming + Switching to OFFBOARD mode ] " <<endl;
@@ -420,7 +414,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
             {
                 cout << "Command: [ Idle ] " <<endl;
             }
-            
             break;
 
         case prometheus_msgs::SwarmCommand::Takeoff:
@@ -463,7 +456,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
 
             cout << "Position [X Y Z] : " << x  << " [ m ] "<< y <<" [ m ] "<< z <<" [ m ] "<<endl;
             cout << "Yaw : "  << yaw * 180/M_PI << " [deg] " <<endl;
-
             break;
 
         case prometheus_msgs::SwarmCommand::Velocity_Control:
@@ -477,7 +469,6 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
 
             cout << "Position [X Y Z] : " << x  << " [ m ] "<< y <<" [ m ] "<< z <<" [ m ] "<<endl;
             cout << "Yaw : "  << yaw * 180/M_PI << " [deg] " <<endl;
-
             break;
 
         case prometheus_msgs::SwarmCommand::Accel_Control:
@@ -497,9 +488,7 @@ void printf_swarm_state(int swarm_num, int uav_id, string uav_name, const promet
         case prometheus_msgs::SwarmCommand::User_Mode1:
             cout << "Command: [ User_Mode1 ] " <<endl;
             break;
-
     }
-
 }
 
 Eigen::Vector3d accelToThrottle(const Eigen::Vector3d& accel_sp, float mass, float tilt_max)
@@ -532,9 +521,6 @@ Eigen::Vector3d accelToThrottle(const Eigen::Vector3d& accel_sp, float mass, flo
     }
 
     return throttle_sp;   
-}
-
-
-
+    }
 }
 #endif

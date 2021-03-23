@@ -144,7 +144,7 @@ int main(int argc, char **argv)
     }
     
     float trajectory_total_time;
-    while (ros::ok())
+    while (ros::ok()) // todo: only check start_flag=0, other function need tested
     {
         cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>Formation Flight Mission<<<<<<<<<<<<<<<<<<<<<<<<< 3 for Circle Trajectory Tracking,"<< endl;
         cout << "Please choose the action: 0 for Formation Shape, 1 for Virtual Leader Pos, 2 for Hold, 3 for Land, 4 for Circle, 5 for Disarm..."<<endl;
@@ -259,25 +259,21 @@ void pub_formation_command()
     if(formation_num == 1)
     {
         cout << "Formation shape: [ One_column ]"<<endl;
-
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::One_column;
     }
     else if(formation_num == 2)
     {
         cout << "Formation shape: [ Triangle ]"<<endl;
-
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Triangle;
     }
     else if(formation_num == 3)
     {
         cout << "Formation shape: [ Square ]"<<endl;
-
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Square;
     }
     else if(formation_num == 4)
     {
         cout << "Formation shape: [ Circular ]"<<endl;
-
         swarm_command.swarm_shape = prometheus_msgs::SwarmCommand::Circular;
     }
     else
