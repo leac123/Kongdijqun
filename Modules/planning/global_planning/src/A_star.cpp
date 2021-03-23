@@ -1,5 +1,5 @@
 #include "A_star.h"
-//good
+//very good
 
 using namespace std;
 using namespace Eigen;
