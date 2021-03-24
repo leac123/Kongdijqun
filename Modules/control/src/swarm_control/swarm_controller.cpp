@@ -120,6 +120,7 @@ int main(int argc, char **argv)
 
     //无人机编号 1号无人机则为1
     nh.param<int>("swarm_num", swarm_num, 1);
+    // 如果是使用的ekf2_gps则需要设置，　如果使用的是ekf2_vision则不需要
     nh.param<float>("x", gazebo_offset[0], 0);
     nh.param<float>("y", gazebo_offset[1], 0);
     nh.param<float>("z", gazebo_offset[2], 0);
