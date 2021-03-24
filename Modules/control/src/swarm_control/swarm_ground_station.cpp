@@ -22,7 +22,7 @@ ros::Subscriber drone_state_sub[max_swarm_num+1];
 ros::Subscriber message_sub[max_swarm_num+1];
 char *servInetAddr = "127.0.0.1"; //sever ip
 string data;
-char sendline[256];
+char sendline[1024];
 int socketfd;
 struct sockaddr_in sockaddr;
 
@@ -96,23 +96,23 @@ int main(int argc, char **argv)
                 (State_uav[i].velocity[0])%(State_uav[i].velocity[1])%(State_uav[i].velocity[2])%
                 (State_uav[i].attitude[0])%(State_uav[i].attitude[1])%(State_uav[i].attitude[2])).str();
             cout << data << endl;
-            
-            // //send by socket
-            // socketfd = socket(AF_INET,SOCK_STREAM,0);
-            // memset(&sockaddr,0,sizeof(sockaddr));
-            // sockaddr.sin_family = AF_INET;
-            // sockaddr.sin_port = htons(10003);
-            // inet_pton(AF_INET,servInetAddr,&sockaddr.sin_addr);
-            // if((connect(socketfd,(struct sockaddr*)&sockaddr,sizeof(sockaddr))) < 0 ) {
-            //     printf("connect error %s errno: %d\n",strerror(errno),errno);
-            //     printf("client connect failed!\n");
-            // }
-            // if((send(socketfd,sendline,strlen(sendline),0)) < 0)
-            // {
-            //     printf("send mes error: %s errno : %d\n",strerror(errno),errno);
-            //     printf("client send failed!\n");
-            // }
-            // close(socketfd);
+            strcpy(sendline,data.c_str());
+            //send by socket
+            socketfd = socket(AF_INET,SOCK_STREAM,0);
+            memset(&sockaddr,0,sizeof(sockaddr));
+            sockaddr.sin_family = AF_INET;
+            sockaddr.sin_port = htons(10004);
+            inet_pton(AF_INET,servInetAddr,&sockaddr.sin_addr);
+            if((connect(socketfd,(struct sockaddr*)&sockaddr,sizeof(sockaddr))) < 0 ) {
+                printf("connect error %s errno: %d\n",strerror(errno),errno);
+                printf("client connect failed!\n");
+            }
+            if((send(socketfd,sendline,strlen(sendline),0)) < 0)
+            {
+                printf("send mes error: %s errno : %d\n",strerror(errno),errno);
+                printf("client send failed!\n");
+            }
+            close(socketfd);
         }
         sleep(2.0); // frequence
     }
