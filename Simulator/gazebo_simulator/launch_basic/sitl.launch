@@ -55,8 +55,12 @@
 	</node>
 
 	<!-- 启动MAVROS -->
+	<arg name="ID" value="0"/>
+	<arg name="udp_offboard_port_remote" value="$(eval 24540 + arg('ID'))"/>
+	<arg name="udp_offboard_port_local" value="$(eval 34580 + arg('ID'))"/>
 	<node pkg="mavros" type="mavros_node" name="mavros" output="screen">
-		<param name="fcu_url" value="udp://:14540@localhost:14557" />
+		<!-- <param name="fcu_url" value="udp://:14540@localhost:14557" /> -->
+		<param name="fcu_url" value="udp://:$(arg udp_offboard_port_remote)@localhost:$(arg udp_offboard_port_local)"/>
 		<param name="gcs_url" value="" />
 		<param name="target_system_id" value="1" />
 		<param name="target_component_id" value="1" />
