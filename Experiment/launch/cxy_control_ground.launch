@@ -1,5 +1,3 @@
-<!-- 本launch为使用px4_sender进行机载控制时的地面端启动脚本 -->
-<!-- 硬件清单 -->
 <launch>
 	<!-- run the ground_station.cpp -->
 	<node pkg="prometheus_station" type="ground_station" name="ground_station" output="screen" launch-prefix="gnome-terminal --tab --">	
