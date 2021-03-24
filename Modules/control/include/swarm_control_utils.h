@@ -46,57 +46,12 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
     //矩阵大小为　swarm_num＊4 , 对应　x,y,z,yaw四个自由度的分离量
     Eigen::MatrixXf seperation(swarm_num,4); 
  
+    // cxy 默认swarm_size为１米
+
     // one_column shape
     // 横向一字型，虚拟领机位置为中心位置，其余飞机根据数量向左右增加
     if(swarm_shape == prometheus_msgs::SwarmCommand::One_column)
     {
-        if(swarm_num == 3)
-        {
-            //　数量为3时，１号机即虚拟领机位置
-            seperation(0,0) = 0.0;
-            seperation(0,1) = 0.0;  
-            seperation(0,2) = 0.0;
-            seperation(0,3) = 0.0;
-
-            seperation(1,0) = 0.0;
-            seperation(1,1) = swarm_size;  
-            seperation(1,2) = 0.0;
-            seperation(1,3) = 0.0;
-
-            seperation(2,0) = 0.0;
-            seperation(2,1) = - 1 * swarm_size;  
-            seperation(2,2) = 0.0;
-            seperation(2,3) = 0.0;
-        }
-
-        if(swarm_num == 5)
-        {
-            //　数量为５时，１号机即虚拟领机位置
-            seperation(0,0) = 0.0;
-            seperation(0,1) = 0.0;  
-            seperation(0,2) = 0.0;
-            seperation(0,3) = 0.0;
-
-            seperation(1,0) = 0.0;
-            seperation(1,1) = swarm_size;  
-            seperation(1,2) = 0.0;
-            seperation(1,3) = 0.0;
-
-            seperation(2,0) = 0.0;
-            seperation(2,1) = - 1 * swarm_size;  
-            seperation(2,2) = 0.0;
-            seperation(2,3) = 0.0;
-
-            seperation(3,0) = 0.0;
-            seperation(3,1) = 2 * swarm_size;  
-            seperation(3,2) = 0.0;
-            seperation(3,3) = 0.0;
-
-            seperation(4,0) = 0.0;
-            seperation(4,1) = - 2 * swarm_size;  
-            seperation(4,2) = 0.0;
-            seperation(4,3) = 0.0;
-        }
         if(swarm_num == 8)
         {
             seperation(0,0) = 0.5 * swarm_size;
@@ -145,91 +100,45 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
     // 三角型，虚拟领机位置为中心位置
     if(swarm_shape == prometheus_msgs::SwarmCommand::Triangle)
     {
-        if(swarm_num == 3)
-        {
-            //　数量为５时，
-            seperation(0,0) = swarm_size;
-            seperation(0,1) = 0.0;  
-            seperation(0,2) = 0.0;
-            seperation(0,3) = 0.0;
-
-            seperation(1,0) = 0.0;
-            seperation(1,1) = 0.5 * swarm_size;  
-            seperation(1,2) = 0.0;
-            seperation(1,3) = 0.0;
-
-            seperation(2,0) = 0.0;
-            seperation(2,1) = - 0.5 * swarm_size;  
-            seperation(2,2) = 0.0;
-            seperation(2,3) = 0.0;
-        }
-        else if(swarm_num == 5)
-        {
-            //　数量为５时，
-            seperation(0,0) = swarm_size;
-            seperation(0,1) = 0.0;  
-            seperation(0,2) = 0.0;
-            seperation(0,3) = 0.0;
-
-            seperation(1,0) = 0.0;
-            seperation(1,1) = 0.5 * swarm_size;  
-            seperation(1,2) = 0.0;
-            seperation(1,3) = 0.0;
-
-            seperation(2,0) = 0.0;
-            seperation(2,1) = - 0.5 * swarm_size;  
-            seperation(2,2) = 0.0;
-            seperation(2,3) = 0.0;
-
-            seperation(3,0) = -1 * swarm_size;
-            seperation(3,1) = 1 * swarm_size;  
-            seperation(3,2) = 0.0;
-            seperation(3,3) = 0.0;
-
-            seperation(4,0) = -1 * swarm_size;
-            seperation(4,1) = -1 * swarm_size;  
-            seperation(4,2) = 0.0;
-            seperation(4,3) = 0.0;
-        }
-        else if(swarm_num == 8)
+        if(swarm_num == 8)
         {
             seperation(0,0) = 0.5 * swarm_size;
-            seperation(0,1) = 1.5 * swarm_size;  
-            seperation(0,2) = 0.0;
+            seperation(0,1) = 2.0 * swarm_size;  
+            seperation(0,2) = 00;
             seperation(0,3) = 0.0;
 
             seperation(1,0) = -0.5 * swarm_size;
-            seperation(1,1) = 1.5 * swarm_size;  
+            seperation(1,1) = 2.0 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
             seperation(2,0) = 1.5 * swarm_size;
-            seperation(2,1) = 0.5 * swarm_size;  
+            seperation(2,1) = 1.0 * swarm_size;  
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
             seperation(3,0) = -1.5 * swarm_size;
-            seperation(3,1) = 0.5 * swarm_size;  
+            seperation(3,1) = 1.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
             seperation(4,0) = 2.5 * swarm_size;
-            seperation(4,1) = -0.5 * swarm_size;  
+            seperation(4,1) = -0.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
             seperation(5,0) = -2.5 * swarm_size;
-            seperation(5,1) = -0.5 * swarm_size;  
+            seperation(5,1) = 0.0 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
             seperation(6,0) = 3.5 * swarm_size;
-            seperation(6,1) = -1.5 * swarm_size;  
+            seperation(6,1) = -1.0 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 
             seperation(7,0) = -3.5 * swarm_size;
-            seperation(7,1) = -1.5 * swarm_size;  
+            seperation(7,1) = -1.0 * swarm_size;  
             seperation(7,2) = 0.0;
             seperation(7,3) = 0.0;
         }
@@ -239,55 +148,45 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
     // 方型，虚拟领机位置为中心位置
     if(swarm_shape == prometheus_msgs::SwarmCommand::Square)
     {
-        if(swarm_num == 3)
+        if(swarm_num == 8)
         {
-            //　数量为５时，
-            // todo
-        }
-        else if(swarm_num == 5)
-        {
-            //　数量为５时，
-            // todo
-        }
-        else if(swarm_num == 8)
-        {
-            seperation(0,0) = 0.0 * swarm_size;
-            seperation(0,1) = -1.0 * swarm_size;  
+            seperation(0,0) = 0.5 * swarm_size;
+            seperation(0,1) = -2.0 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 0.0 * swarm_size;
-            seperation(1,1) = 1.0 * swarm_size;  
+            seperation(1,0) = -0.5 * swarm_size;
+            seperation(1,1) = 2.0 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
-            seperation(2,0) = 1.0 * swarm_size;
-            seperation(2,1) = 1.0 * swarm_size;  
+            seperation(2,0) = 2.5 * swarm_size;
+            seperation(2,1) = 2.0 * swarm_size;  
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = -1.0 * swarm_size;
-            seperation(3,1) = 1.0 * swarm_size;  
+            seperation(3,0) = -2.5 * swarm_size;
+            seperation(3,1) = 2.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = 1.0 * swarm_size;
+            seperation(4,0) = 2.5 * swarm_size;
             seperation(4,1) = 0.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
-            seperation(5,0) = -1.0 * swarm_size;
+            seperation(5,0) = -2.5 * swarm_size;
             seperation(5,1) = 0.0 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
-            seperation(6,0) = 1.0 * swarm_size;
-            seperation(6,1) = -1.0 * swarm_size;  
+            seperation(6,0) = 2.5 * swarm_size;
+            seperation(6,1) = -2.0 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 
-            seperation(7,0) = -1.0 * swarm_size;
-            seperation(7,1) = -1.0 * swarm_size;  
+            seperation(7,0) = -2.5 * swarm_size;
+            seperation(7,1) = -2.0 * swarm_size;  
             seperation(7,2) = 0.0;
             seperation(7,3) = 0.0;
         }
@@ -297,55 +196,45 @@ Eigen::MatrixXf get_formation_separation(int swarm_shape, float swarm_size, int 
     // 圆形，虚拟领机位置为中心位置
     if(swarm_shape == prometheus_msgs::SwarmCommand::Circular)
     {
-        if(swarm_num == 3)
+        if(swarm_num == 8)
         {
-            //　数量为５时，
-            // todo
-        }
-        else if(swarm_num == 5)
-        {
-            //　数量为５时，
-            // todo
-        }
-        else if(swarm_num == 8)
-        {
-            seperation(0,0) = 0.0 * swarm_size;
-            seperation(0,1) = -1.414 * swarm_size;  
+            seperation(0,0) = 0.5 * swarm_size;
+            seperation(0,1) = -1.0 * swarm_size;  
             seperation(0,2) = 0.0;
             seperation(0,3) = 0.0;
 
-            seperation(1,0) = 0.0 * swarm_size;
-            seperation(1,1) = 1.414 * swarm_size;  
+            seperation(1,0) = -0.5 * swarm_size;
+            seperation(1,1) = 1.0 * swarm_size;  
             seperation(1,2) = 0.0;
             seperation(1,3) = 0.0;
 
-            seperation(2,0) = 1.0 * swarm_size;
+            seperation(2,0) = 2.0 * swarm_size;
             seperation(2,1) = 1.0 * swarm_size;  
             seperation(2,2) = 0.0;
             seperation(2,3) = 0.0;
 
-            seperation(3,0) = -1.0 * swarm_size;
+            seperation(3,0) = -2.0 * swarm_size;
             seperation(3,1) = 1.0 * swarm_size;  
             seperation(3,2) = 0.0;
             seperation(3,3) = 0.0;
 
-            seperation(4,0) = 1.414 * swarm_size;
-            seperation(4,1) = 0.0 * swarm_size;  
+            seperation(4,0) = 2.0 * swarm_size;
+            seperation(4,1) = -1.0 * swarm_size;  
             seperation(4,2) = 0.0;
             seperation(4,3) = 0.0;
 
-            seperation(5,0) = -1.414 * swarm_size;
-            seperation(5,1) = 0.0 * swarm_size;  
+            seperation(5,0) = -2.0 * swarm_size;
+            seperation(5,1) = -1.0 * swarm_size;  
             seperation(5,2) = 0.0;
             seperation(5,3) = 0.0;
 
-            seperation(6,0) = 1.0 * swarm_size;
-            seperation(6,1) = -1.0 * swarm_size;  
+            seperation(6,0) = 3.5 * swarm_size;
+            seperation(6,1) = 0.0 * swarm_size;  
             seperation(6,2) = 0.0;
             seperation(6,3) = 0.0;
 
-            seperation(7,0) = -1.0 * swarm_size;
-            seperation(7,1) = -1.0 * swarm_size;  
+            seperation(7,0) = -3.5 * swarm_size;
+            seperation(7,1) = 0.0 * swarm_size;  
             seperation(7,2) = 0.0;
             seperation(7,3) = 0.0;
         }

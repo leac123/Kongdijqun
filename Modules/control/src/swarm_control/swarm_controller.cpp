@@ -264,8 +264,8 @@ int main(int argc, char **argv)
                 state_sp = Eigen::Vector3d(Takeoff_position[0],Takeoff_position[1],Takeoff_position[2] + Takeoff_height);
             }
             _command_to_mavros.send_pos_setpoint(state_sp, Command_Now.yaw_ref);
-            cout << "h:" << Takeoff_position[0]<<Takeoff_position[1]<<Takeoff_position[2] + Takeoff_height << _DroneState.attitude[2] <<endl;
-            cout << "drone:" << Command_Now.position_ref[0]<<Command_Now.position_ref[1]<<Command_Now.position_ref[2] << Command_Now.yaw_ref <<endl;
+            // cout << "h:" << Takeoff_position[0]<<Takeoff_position[1]<<Takeoff_position[2] + Takeoff_height << _DroneState.attitude[2] <<endl;
+            // cout << "drone:" << Command_Now.position_ref[0]<<Command_Now.position_ref[1]<<Command_Now.position_ref[2] << Command_Now.yaw_ref <<endl;
             
             break;
 
