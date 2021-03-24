@@ -3,8 +3,8 @@
     <arg name="y" default="0"/>
     <arg name="z" default="0"/>
 	<arg name="world" default="$(find prometheus_gazebo)/worlds/004_CXY/CXY_vicon_room.world"/>
-	<arg name="sdf" default="$(find prometheus_gazebo)/amov_models/cxy_solo/cxy_solo.sdf"/>
-	<arg name="model" default="solo"/>
+	<arg name="sdf" default="$(find prometheus_gazebo)/amov_models/Multisolo/uav1/uav1.sdf"/>
+	<arg name="model" default="uav1"/>
     <include file="$(find prometheus_gazebo)/launch_CXY/sitl_cxy_basic.launch">
 	  <arg name="world" value="$(arg world)"/>
 	  <arg name="sdf" value="$(arg sdf)"/>

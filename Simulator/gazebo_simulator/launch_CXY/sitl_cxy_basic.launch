@@ -47,8 +47,8 @@
 	<arg name="R" default="0.0"/>
     <arg name="P" default="0.0"/>
     <arg name="Y" default="0.0"/>
-	<arg name="sdf" default="$(find prometheus_gazebo)/amov_models/cxy_solo/cxy_solo.sdf"/>
-	<arg name="model" default="solo"/>
+	<arg name="sdf" default="$(find prometheus_gazebo)/amov_models/Multisolo/uav1/uav1.sdf"/>
+	<arg name="model" default="uav1"/>
 	<node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen" 
 		args="-sdf -file $(arg sdf) -model $(arg model) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)">
 	</node>
@@ -78,10 +78,12 @@
 	<!-- run the px4_pos_estimator.cpp -->
 	<arg name="input_source" default="2"/>
 	<arg name="rate_hz" default="30"/>
+	<arg name="object_name" default="uav1"/>
 	<node pkg="prometheus_control" type="px4_pos_estimator" name="px4_pos_estimator" output="screen">
 		<!-- 定位数据输入源 0 for vicon， 1 for 激光SLAM, 2 for gazebo ground truth, 3 for T265 -->
 		<param name="input_source" value="$(arg input_source)" />
 		<param name="rate_hz" value="$(arg rate_hz)" />
+		<param name="object_name" value="$(arg object_name)" />
 		<param name="offset_x" value="$(arg x)" />
 		<param name="offset_y" value="$(arg y)" />
 		<param name="offset_z" value="$(arg z)" />
