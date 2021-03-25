@@ -29,6 +29,9 @@ void Global_Planner::init(ros::NodeHandle& nh)
     // 订阅 无人机状态
     drone_state_sub = nh.subscribe<prometheus_msgs::DroneState>("/prometheus/drone_state", 10, &Global_Planner::drone_state_cb, this);
 
+    // 订阅的话题待修改
+    detection_sub = nh.subscribe<prometheus_msgs::DetectionInfo>("/prometheus/object_detection/xxx", 10, &Global_Planner::detection_cb, this);
+
     // 根据map_input选择地图更新方式
     if(map_input == 0)
     {
@@ -157,6 +160,11 @@ void Global_Planner::goal_cb(const geometry_msgs::PoseStampedConstPtr& msg)
         exec_state = EXEC_STATE::LANDING;
         pub_message(message_pub, prometheus_msgs::Message::NORMAL, NODE_NAME,"Land");
     }
+
+}
+
+void Global_Planner::detection_cb(const prometheus_msgs::DetectionInfoConstPtr &msg)
+{
 
 }
 
@@ -526,6 +534,9 @@ int Global_Planner::get_start_point_id(void)
 
     return id;
 }
+
+
+
 
 
 

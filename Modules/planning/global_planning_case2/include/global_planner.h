@@ -19,6 +19,7 @@
 #include "prometheus_msgs/Message.h"
 #include "prometheus_msgs/DroneState.h"
 #include "prometheus_msgs/ControlCommand.h"
+#include "prometheus_msgs/DetectionInfo.h"
 
 #include "A_star.h"
 #include "occupy_map.h"
@@ -68,7 +69,8 @@ private:
     ros::Subscriber Gpointcloud_sub;
     ros::Subscriber Lpointcloud_sub;
     ros::Subscriber laserscan_sub;
-    // ？
+    // 订阅识别结果
+    ros::Subscriber detection_sub;
 
     // 发布控制指令
     ros::Publisher command_pub,path_cmd_pub;
@@ -125,6 +127,7 @@ private:
     void Gpointcloud_cb(const sensor_msgs::PointCloud2ConstPtr &msg);
     void Lpointcloud_cb(const sensor_msgs::PointCloud2ConstPtr &msg);
     void laser_cb(const sensor_msgs::LaserScanConstPtr &msg);
+    void detection_cb(const prometheus_msgs::DetectionInfoConstPtr &msg);
 
     void safety_cb(const ros::TimerEvent& e);
     void mainloop_cb(const ros::TimerEvent& e);
