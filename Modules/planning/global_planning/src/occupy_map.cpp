@@ -1,4 +1,5 @@
 #include <occupy_map.h>
+#include <pcl/common/transforms.h>
 
 namespace Global_Planning
 {
@@ -55,16 +56,30 @@ void Occupy_map::init(ros::NodeHandle& nh)
 // 地图更新函数 - 输入：全局点云
 void Occupy_map::map_update_gpcl(const sensor_msgs::PointCloud2ConstPtr & global_point)
 {
+    pcl::PointCloud<pcl::PointXYZ>::Ptr globalPointCloud(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::fromROSMsg(*global_point,*globalPointCloud);
+    gobalPointCloudMap = globalPointCloud;
     has_global_point = true;
-    global_env_ = global_point;
 }
 
 // 地图更新函数 - 输入：局部点云
 void Occupy_map::map_update_lpcl(const sensor_msgs::PointCloud2ConstPtr & local_point, const nav_msgs::Odometry & odom)
 {
+    pcl::PointCloud<pcl::PointXYZ>::Ptr rawPointCloud(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::PointCloud<pcl::PointXYZ>::Ptr transformed_cloud(new pcl::PointCloud<pcl::PointXYZ>);
+    pcl::fromROSMsg(*local_point,*rawPointCloud);
+
+    double x, y, z, roll, pitch, yaw;
+    x = odom.pose.pose.position.x;
+    y = odom.pose.pose.position.y;
+    z = odom.pose.pose.position.z;
+    tf::Quaternion orientation;
+    tf::quaternionMsgToTF(odom.pose.pose.orientation, orientation);    
+    tf::Matrix3x3(orientation).getRPY(roll, pitch, yaw);
+
+    pcl::transformPointCloud(*rawPointCloud,*transformed_cloud,pcl::getTransformation(x, y, z, roll, pitch, yaw));
+    *gobalPointCloudMap += *transformed_cloud;
     has_global_point = true;
-// 待江涛更新
-// 将传递过来的局部点云转为全局点云
 }
 
 // 地图更新函数 - 输入：laser
@@ -86,14 +101,15 @@ void Occupy_map::inflate_point_cloud(void)
     }
 
     // 发布未膨胀点云
-    global_pcl_pub.publish(*global_env_);
+    sensor_msgs::PointCloud2 global_env_;
+    pcl::toROSMsg(*gobalPointCloudMap,global_env_);
+    global_pcl_pub.publish(global_env_);
 
     //记录开始时间
     ros::Time time_start = ros::Time::now();
 
     // 转化为PCL的格式进行处理
-    pcl::PointCloud<pcl::PointXYZ> latest_global_cloud_;
-    pcl::fromROSMsg(*global_env_, latest_global_cloud_);
+    pcl::PointCloud<pcl::PointXYZ> latest_global_cloud_ = *gobalPointCloudMap;
 
     //printf("time 1 take %f [s].\n",   (ros::Time::now()-time_start).toSec());
 
