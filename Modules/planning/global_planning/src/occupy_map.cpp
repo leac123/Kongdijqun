@@ -6,6 +6,9 @@ namespace Global_Planning
 // 初始化函数
 void Occupy_map::init(ros::NodeHandle& nh)
 {
+    gobalPointCloudMap.reset(new pcl::PointCloud<pcl::PointXYZ>);
+    inputPointCloud.reset(new pcl::PointCloud<pcl::PointXYZ>);
+    transformed_cloud.reset(new pcl::PointCloud<pcl::PointXYZ>);
     // TRUE代表2D平面规划及搜索,FALSE代表3D 
     nh.param("global_planner/is_2D", is_2D, true); 
     // 2D规划时,定高高度
@@ -56,18 +59,15 @@ void Occupy_map::init(ros::NodeHandle& nh)
 // 地图更新函数 - 输入：全局点云
 void Occupy_map::map_update_gpcl(const sensor_msgs::PointCloud2ConstPtr & global_point)
 {
-    pcl::PointCloud<pcl::PointXYZ>::Ptr globalPointCloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(*global_point,*globalPointCloud);
-    gobalPointCloudMap = globalPointCloud;
+    pcl::fromROSMsg(*global_point,*inputPointCloud);
+    gobalPointCloudMap = inputPointCloud;
     has_global_point = true;
 }
 
 // 地图更新函数 - 输入：局部点云
 void Occupy_map::map_update_lpcl(const sensor_msgs::PointCloud2ConstPtr & local_point, const nav_msgs::Odometry & odom)
 {
-    pcl::PointCloud<pcl::PointXYZ>::Ptr rawPointCloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::PointCloud<pcl::PointXYZ>::Ptr transformed_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(*local_point,*rawPointCloud);
+    pcl::fromROSMsg(*local_point,*inputPointCloud);
 
     double x, y, z, roll, pitch, yaw;
     x = odom.pose.pose.position.x;
@@ -77,7 +77,7 @@ void Occupy_map::map_update_lpcl(const sensor_msgs::PointCloud2ConstPtr & local_
     tf::quaternionMsgToTF(odom.pose.pose.orientation, orientation);    
     tf::Matrix3x3(orientation).getRPY(roll, pitch, yaw);
 
-    pcl::transformPointCloud(*rawPointCloud,*transformed_cloud,pcl::getTransformation(x, y, z, roll, pitch, yaw));
+    pcl::transformPointCloud(*inputPointCloud,*transformed_cloud,pcl::getTransformation(x, y, z, roll, pitch, yaw));
     *gobalPointCloudMap += *transformed_cloud;
     has_global_point = true;
 }
