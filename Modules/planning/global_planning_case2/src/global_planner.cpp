@@ -20,8 +20,27 @@ void Global_Planner::init(ros::NodeHandle& nh)
     nh.param("global_planner/map_input", map_input, 0); 
     // 是否为仿真模式
     nh.param("global_planner/sim_mode", sim_mode, false); 
+    nh.param("global_planner/waypoint_mode", waypoint_mode, false); 
 
     nh.param("global_planner/map_groundtruth", map_groundtruth, false); 
+
+    nh.param("global_planner/waypoint_num", waypoint_num, 1); 
+    // 
+    nh.param("waypoint1/x", waypoint1[0], 0.0); 
+    nh.param("waypoint1/y", waypoint1[1], 0.0); 
+    nh.param("waypoint1/z", waypoint1[2], 0.0); 
+    nh.param("waypoint2/x", waypoint2[0], 0.0); 
+    nh.param("waypoint2/y", waypoint2[1], 0.0); 
+    nh.param("waypoint2/z", waypoint2[2], 0.0); 
+    nh.param("waypoint3/x", waypoint3[0], 0.0); 
+    nh.param("waypoint3/y", waypoint3[1], 0.0); 
+    nh.param("waypoint3/z", waypoint3[2], 0.0); 
+    nh.param("waypoint4/x", waypoint4[0], 0.0); 
+    nh.param("waypoint4/y", waypoint4[1], 0.0); 
+    nh.param("waypoint4/z", waypoint4[2], 0.0); 
+    nh.param("waypoint5/x", waypoint5[0], 0.0); 
+    nh.param("waypoint5/y", waypoint5[1], 0.0); 
+    nh.param("waypoint5/z", waypoint5[2], 0.0); 
 
     // 订阅 目标点
     goal_sub = nh.subscribe<geometry_msgs::PoseStamped>("/prometheus/planning/goal", 1, &Global_Planner::goal_cb, this);
@@ -50,6 +69,8 @@ void Global_Planner::init(ros::NodeHandle& nh)
     message_pub = nh.advertise<prometheus_msgs::Message>("/prometheus/message/global_planner", 10);
     // 发布路径用于显示
     path_cmd_pub   = nh.advertise<nav_msgs::Path>("/prometheus/global_planning/path_cmd",  10); 
+
+    detection_result_pub = nh.advertise<prometheus_msgs::DetectionInfo>("/uav_x/prometheus/case2/xxx", 10);
     // 定时器 安全检测
     // safety_timer = nh.createTimer(ros::Duration(2.0), &Global_Planner::safety_cb, this); 
     // 定时器 规划器算法执行周期
@@ -74,6 +95,11 @@ void Global_Planner::init(ros::NodeHandle& nh)
     sensor_ready = false;
     is_safety = true;
     is_new_path = false;
+
+    // 检测相关
+    detected = false;
+    detected_by_others = false;
+    object_pos << 0.0, 0.0, 0.0; 
 
     // 初始化发布的指令
     Command_Now.header.stamp = ros::Time::now();
@@ -113,23 +139,25 @@ void Global_Planner::init(ros::NodeHandle& nh)
     }else
     {
         //　真实飞行情况：等待飞机状态变为offboard模式，然后发送起飞指令
-        // while(_DroneState.mode != "OFFBOARD")
-        // {
-        //     Command_Now.header.stamp = ros::Time::now();
-        //     Command_Now.Mode  = prometheus_msgs::ControlCommand::Idle;
-        //     Command_Now.Command_ID = 1 ;
-        //     Command_Now.source = NODE_NAME;
-        //     command_pub.publish(Command_Now);   
-        //     cout << "Waiting for the offboard mode"<<endl;
-        //     ros::Duration(1.0).sleep();
-        //     ros::spinOnce();
-        // }
-        // Command_Now.header.stamp = ros::Time::now();
-        // Command_Now.Mode = prometheus_msgs::ControlCommand::Takeoff;
-        // Command_Now.Command_ID = Command_Now.Command_ID + 1;
-        // Command_Now.source = NODE_NAME;
-        // command_pub.publish(Command_Now);
-        // cout << "Takeoff ..."<<endl;
+        // offboard指令由遥控器发出
+        while(_DroneState.mode != "OFFBOARD")
+        {
+            Command_Now.header.stamp = ros::Time::now();
+            Command_Now.Mode  = prometheus_msgs::ControlCommand::Idle;
+            Command_Now.Command_ID = 1 ;
+            Command_Now.source = NODE_NAME;
+            command_pub.publish(Command_Now);   
+            cout << "Waiting for the offboard mode"<<endl;
+            ros::Duration(1.0).sleep();
+            ros::spinOnce();
+        }
+        // 需要将起飞高度设置为2D飞行高度一致
+        Command_Now.header.stamp = ros::Time::now();
+        Command_Now.Mode = prometheus_msgs::ControlCommand::Takeoff;
+        Command_Now.Command_ID = Command_Now.Command_ID + 1;
+        Command_Now.source = NODE_NAME;
+        command_pub.publish(Command_Now);
+        cout << "Takeoff ..."<<endl;
     }
 
 }
@@ -153,6 +181,7 @@ void Global_Planner::goal_cb(const geometry_msgs::PoseStampedConstPtr& msg)
 
     cout << "Get a new goal point:"<< goal_pos(0) << " [m] "  << goal_pos(1) << " [m] "  << goal_pos(2)<< " [m] "   <<endl;
 
+    // 当目标点为[99,99]时,无人机原地降落
     if(goal_pos(0) == 99 && goal_pos(1) == 99 )
     {
         path_ok = false;
@@ -165,7 +194,20 @@ void Global_Planner::goal_cb(const geometry_msgs::PoseStampedConstPtr& msg)
 
 void Global_Planner::detection_cb(const prometheus_msgs::DetectionInfoConstPtr &msg)
 {
+    // 如果其他无人机检测到,则不在接收本机的检测结果
+    if(detected_by_others)
+    {
+        return;
+    }
 
+    // 根据检测结果判断是否识别到目标
+    if(0)
+    {
+        detected = true;
+        object_pos << 0.0, 0.0, 0.0; 
+        // 发布
+        //detection_result_pub.publish();
+    }
 }
 
 void Global_Planner::drone_state_cb(const prometheus_msgs::DroneStateConstPtr& msg)

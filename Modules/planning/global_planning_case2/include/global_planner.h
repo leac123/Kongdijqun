@@ -53,6 +53,7 @@ private:
     double replan_time;
     bool consider_neighbour;
     bool sim_mode;
+    bool waypoint_mode;
     bool map_groundtruth;
 
     // 本机位置
@@ -74,6 +75,8 @@ private:
 
     // 发布控制指令
     ros::Publisher command_pub,path_cmd_pub;
+    // 发布检测结果至其他无人机 无人车 地面站
+    ros::Publisher detection_result_pub;
     ros::Timer mainloop_timer, track_path_timer, safety_timer;
 
     // A星规划器
@@ -100,6 +103,14 @@ private:
     int Num_total_wp;
     int cur_id;
 
+    int waypoint_num;
+
+    Eigen::Vector3d waypoint1;
+    Eigen::Vector3d waypoint2;
+    Eigen::Vector3d waypoint3;
+    Eigen::Vector3d waypoint4;
+    Eigen::Vector3d waypoint5;
+
     // 规划初始状态及终端状态
     Eigen::Vector3d start_pos, start_vel, start_acc, goal_pos, goal_vel;
 
@@ -120,6 +131,12 @@ private:
         LANDING,
     };
     EXEC_STATE exec_state;
+
+    // 检测相关
+    bool detected;
+    bool detected_by_others;
+    Eigen::Vector3d object_pos;
+
 
     // 回调函数
     void goal_cb(const geometry_msgs::PoseStampedConstPtr& msg);
